@@ -173,4 +173,4 @@ function Drum({ synth, setSynth }: InstrumentProps): JSX.Element {
   );
 }
 
-export const DrumInstrument = new Instrument('Drum', Drum);
+export const DrumInstrument = new Instrument('Frogger-Software', Drum);

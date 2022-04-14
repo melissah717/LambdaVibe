@@ -46,8 +46,16 @@ export function VisualizerContainer({ visualizer }: VisualizerContainerProps) {
   const setup = (p5: P5, canvasParentRef: Element) => {
     const width = window.innerWidth;
     const height = window.innerHeight / 2;
-    p5.createCanvas(width, height).parent(canvasParentRef);
-    // p5.createCanvas(width, height, "webgl").parent(canvasParentRef);
+
+    // Adding an option for webgl for visualizers that require it.
+    if (name === "saxgetty") {
+
+      p5.createCanvas(width, height, "webgl").parent(canvasParentRef);
+    }
+    else {
+
+      p5.createCanvas(width, height).parent(canvasParentRef);
+    }
   };
 
   return (

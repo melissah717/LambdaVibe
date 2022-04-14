@@ -3,9 +3,9 @@ import P5 from 'p5';
 import * as Tone from 'tone';
 
 // project imports
-import { VisualizerWebg } from '../VisualizerWebg';
+import { Visualizer } from '../Visualizers';
 
-export const saxgettyVisualizer = new VisualizerWebg(
+export const saxgettyVisualizer = new Visualizer(
   'saxgetty',
   (p5: P5, analyzer: Tone.Analyser) => {
     const width = window.innerWidth;

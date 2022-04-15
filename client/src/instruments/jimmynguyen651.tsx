@@ -11,7 +11,7 @@ import { Instrument, InstrumentProps } from '../Instruments';
  * Contains implementation of components for Piano.
  ** ------------------------------------------------------------------------ */
 
-interface PianoKeyProps {
+interface GuitarNotesProps {
   note: string; // C, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B
   duration?: string;
   synth?: Tone.Synth; // Contains library code for making sound
@@ -20,15 +20,15 @@ interface PianoKeyProps {
   index: number; // octave + index together give a location for the piano key
 }
 
-export function PianoKey({
+export function GuitarNotes({
   note,
   synth,
   minor,
   index,
-}: PianoKeyProps): JSX.Element {
+}: GuitarNotesProps): JSX.Element {
   /**
    * This React component corresponds to either a major or minor key in the piano.
-   * See `PianoKeyWithoutJSX` for the React component without JSX.
+   * See `GuitarKeyWithoutJSX` for the React component without JSX.
    */
   return (
     // Observations:
@@ -45,7 +45,6 @@ export function PianoKey({
       style={{
         // CSS
         top: 0,
-        // determines number of keys
         left: `${index * 2}rem`,
         zIndex: minor ? 1 : 0,
         width: minor ? '1.5rem' : '2rem',
@@ -56,15 +55,15 @@ export function PianoKey({
 }
 
 // eslint-disable-next-line
-function PianoKeyWithoutJSX({
+function GuitarKeyWithoutJSX({
   note,
   synth,
   minor,
   index,
-}: PianoKeyProps): JSX.Element {
+}: GuitarNotesProps): JSX.Element {
   /**
    * This React component for pedagogical purposes.
-   * See `PianoKey` for the React component with JSX (JavaScript XML).
+   * See `GuitarNotes` for the React component with JSX (JavaScript XML).
    */
   return React.createElement(
     'div',
@@ -87,13 +86,15 @@ function PianoKeyWithoutJSX({
   );
 }
 
-function PianoType({ title, onClick, active }: any): JSX.Element {
+function GuitarType({ title, onClick, active }: any): JSX.Element {
   return (
     <div
       onClick={onClick}
       className={classNames('dim pointer ph2 pv1 ba mr2 br1 fw7 bw1', {
+        // first color means it's selected
         'b--black black': active,
-        'gray b--light-gray': !active,
+        // second color is default appearance
+        'blue': !active,
       })}
     >
       {title}
@@ -101,9 +102,9 @@ function PianoType({ title, onClick, active }: any): JSX.Element {
   );
 }
 
-function Piano({ synth, setSynth }: InstrumentProps): JSX.Element {
+function Guitar({ synth, setSynth }: InstrumentProps): JSX.Element {
   const keys = List([
-    { note: 'C', idx: 0 },
+    { note: 'C', idx: 0},
     { note: 'Db', idx: 0.5 },
     { note: 'D', idx: 1 },
     { note: 'Eb', idx: 1.5 },
@@ -148,7 +149,7 @@ function Piano({ synth, setSynth }: InstrumentProps): JSX.Element {
             const isMinor = key.note.indexOf('b') !== -1;
             const note = `${key.note}${octave}`;
             return (
-              <PianoKey
+              <GuitarNotes
                 key={note} //react key
                 note={note}
                 synth={synth}
@@ -162,7 +163,7 @@ function Piano({ synth, setSynth }: InstrumentProps): JSX.Element {
       </div>
       <div className={'pl4 pt4 flex'}>
         {oscillators.map(o => (
-          <PianoType
+          <GuitarType
             key={o}
             title={o}
             onClick={() => setOscillator(o)}
@@ -174,4 +175,4 @@ function Piano({ synth, setSynth }: InstrumentProps): JSX.Element {
   );
 }
 
-export const PianoInstrument = new Instrument('Piano', Piano);
+export const GuitarInstrument = new Instrument('Guitar', Guitar);

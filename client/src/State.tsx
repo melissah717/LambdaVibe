@@ -5,11 +5,12 @@ import { List, Map } from 'immutable';
 import { PianoInstrument } from './instruments/Piano';
 import { BassInstrument } from './instruments/melissah717';
 import { DrumInstrument } from './instruments/Frogger-Software';
-// import { GuitarInstrument } from './instruments/Guitar';
+import { GuitarInstrument } from './instruments/jimmynguyen651';
 import { SaxophoneInstrument } from './instruments/saxgetty';
 import { WaveformVisualizer } from './visualizers/Waveform';
 import { DrumEnvelopVisualizer } from './visualizers/Frogger-Software';
 import { saxgettyVisualizer } from './visualizers/saxgetty';
+import { jimmynguyen651Visualizer } from './visualizers/jimmynguyen651';
 
 /** ------------------------------------------------------------------------ **
  * The entire application state is stored in AppState.
@@ -20,13 +21,13 @@ export type AppState = Map<string, any>;           // similar to { [id: string]:
  * Start with the default piano instrument.
  * Add your instruments to this list.
  */
-const instruments = List([PianoInstrument, BassInstrument, DrumInstrument, SaxophoneInstrument]);  
+const instruments = List([PianoInstrument, BassInstrument, DrumInstrument, SaxophoneInstrument, GuitarInstrument]);  
 // const instruments = List([PianoInstrument , BassInstrument, GuitarInstrument, DrumsInstrument]);      // similar to Instrument[]
 /**
  * Start with the default waveform visualizer.
  * Add your visualizers to this list.
  */
-const visualizers = List([WaveformVisualizer, DrumEnvelopVisualizer, saxgettyVisualizer]);    // similar to Visualizer[]
+const visualizers = List([WaveformVisualizer, DrumEnvelopVisualizer, saxgettyVisualizer, jimmynguyen651Visualizer]);    // similar to Visualizer[]
 
 
 /**

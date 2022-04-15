@@ -13,9 +13,13 @@ export const WaveformVisualizer = new Visualizer(
     const height = window.innerHeight / 2;
     const dim = Math.min(width, height);
 
+    // background color
     p5.background(0, 0, 0, 255);
 
-    p5.strokeWeight(dim * 0.01);
+    // visualizer size
+    p5.strokeWeight(dim * 0.03);
+
+    // line color
     p5.stroke(255, 255, 255, 255);
     p5.noFill();
 

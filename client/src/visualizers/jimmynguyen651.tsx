@@ -34,7 +34,7 @@ export const jimmynguyen651Visualizer = new Visualizer(
         p5.background(0, 12, 48, 255);
         // maybe add beacons for some smaller building segments
 
-        // BEACONS
+        // BEACONS/SIGNALS FOR BUILDINGS
         // beacon for building 1's top (leftmost)
         p5.rect(100, height + ampSize * 6, 10, 240); 
         p5.rect(100, y * 4.1, 10, 240); // second rectangle w/ diff height value layered on top for visual consistency
@@ -80,8 +80,28 @@ export const jimmynguyen651Visualizer = new Visualizer(
         p5.rect(760, y * 4.1, 30, 140)
 
         
-        // RAINBOW FILL
+        // YELLOW FILL FOR MOUNTAIN LIGHTS
+        p5.fill(200,200,0,255)
+
+        // MOUNTAIN LIGHTS
+        // lights for big mountain 1
+        p5.rect(1047, height + ampSize * 10, 5, 140) 
+        p5.rect(1047, y * 4.1, 5, 140)
+        
+        // lights for big mountain 2 (tallest)
+        p5.rect(1197, height + ampSize * 10, 5, 140) 
+        p5.rect(1197, y * 4.1, 5, 140)
+
+        // lights for big mountain 3 
+        p5.rect(1337, height + ampSize * 10, 5, 140) 
+        p5.rect(1337, y * 4.1, 5, 140)
+
+        // RAINBOW FILL FOR BEACONS
         p5.fill((2*p5.frameCount) % 720, 100, 100);   
+        
+
+        
+        
       }
       p5.endShape();
 
@@ -158,8 +178,23 @@ export const jimmynguyen651Visualizer = new Visualizer(
         p5.triangle(1150, height, 1450,  height, 1340, height - 320);
         p5.triangle(1150, height, 1450,  height, 1440, height - 170);
         p5.triangle(1150, height, 1510,  height, 1470, height - 120);
+
+        // MOUNTAIN SNOWY TOPS
+        // order of left to right
+        p5.fill(255,255,255,255)
+        p5.triangle(885, height - 100, 920,  height - 130, 900, height - 150);
+        p5.triangle(985, height - 240, 1030,  height - 260, 1015, height - 280);
+        p5.triangle(1015, height - 255, 1065,  height - 260, 1050, height - 300); // big mountain 1
+        p5.triangle(1085, height - 200, 1125,  height - 220, 1100, height - 240);
+        p5.triangle(1165, height - 290, 1210,  height - 310, 1200, height - 350); // big mountain 2, tallest
+        p5.triangle(1270, height - 230, 1300,  height - 250, 1290, height - 270);
+        p5.triangle(1300, height - 260, 1357,  height - 270, 1340, height - 320); // big mountain 3, tallest
+        p5.triangle(1400, height - 150, 1441,  height - 140, 1440, height - 170);
+        p5.triangle(1440, height - 100, 1480,  height - 90, 1470, height - 120);
+
+        
         // SNOW
-        for (var i = 0; i < 40; i++ ) {
+        for (var i = 0; i < 40; i++ ) { // loop randomly places elipses everywhere to simulate snow
           p5.fill(255,255, 255, 255)
           var locationX = p5.random(p5.width)
           var locationY = p5.random(p5.height)
@@ -181,7 +216,6 @@ export const jimmynguyen651Visualizer = new Visualizer(
       p5.fill(230,230,180);
       p5.noStroke()
       p5.ellipse(20,20, 190 + ampSize, 190 + ampSize);
-
       p5.endShape();
     
       

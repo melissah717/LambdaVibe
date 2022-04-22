@@ -8,7 +8,7 @@ import { DrumInstrument } from './instruments/Frogger-Software';
 import { GuitarInstrument } from './instruments/jimmynguyen651';
 import { SaxophoneInstrument } from './instruments/saxgetty';
 import { WaveformVisualizer } from './visualizers/Waveform';
-import { DrumEnvelopVisualizer } from './visualizers/Frogger-Software';
+import { FroggerSoftwareVisualizer } from './visualizers/Frogger-Software';
 import { saxgettyVisualizer } from './visualizers/saxgetty';
 import { jimmynguyen651Visualizer } from './visualizers/jimmynguyen651';
 
@@ -27,7 +27,7 @@ const instruments = List([PianoInstrument, BassInstrument, DrumInstrument, Saxop
  * Start with the default waveform visualizer.
  * Add your visualizers to this list.
  */
-const visualizers = List([WaveformVisualizer, DrumEnvelopVisualizer, saxgettyVisualizer, jimmynguyen651Visualizer]);    // similar to Visualizer[]
+const visualizers = List([WaveformVisualizer, FroggerSoftwareVisualizer, saxgettyVisualizer, jimmynguyen651Visualizer]);    // similar to Visualizer[]
 
 
 /**

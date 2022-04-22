@@ -5,7 +5,7 @@ import * as Tone from 'tone';
 // project imports
 import { Visualizer } from '../Visualizers';
 
-export const DrumEnvelopVisualizer = new Visualizer(
+export const FroggerSoftwareVisualizer = new Visualizer(
     'Frogger-Software',
     (p5: P5, analyzer: Tone.Analyser) => {
         const width = window.innerWidth;

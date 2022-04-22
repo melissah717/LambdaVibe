@@ -11,6 +11,8 @@ import { WaveformVisualizer } from './visualizers/Waveform';
 import { DrumEnvelopVisualizer } from './visualizers/Frogger-Software';
 import { saxgettyVisualizer } from './visualizers/saxgetty';
 import { jimmynguyen651Visualizer } from './visualizers/jimmynguyen651';
+import { melissah717Visualizer } from './visualizers/melissah717';
+
 
 /** ------------------------------------------------------------------------ **
  * The entire application state is stored in AppState.
@@ -27,7 +29,7 @@ const instruments = List([PianoInstrument, BassInstrument, DrumInstrument, Saxop
  * Start with the default waveform visualizer.
  * Add your visualizers to this list.
  */
-const visualizers = List([WaveformVisualizer, DrumEnvelopVisualizer, saxgettyVisualizer, jimmynguyen651Visualizer]);    // similar to Visualizer[]
+const visualizers = List([WaveformVisualizer, DrumEnvelopVisualizer, saxgettyVisualizer, jimmynguyen651Visualizer, melissah717Visualizer]);    // similar to Visualizer[]
 
 
 /**

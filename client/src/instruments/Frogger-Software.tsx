@@ -20,6 +20,29 @@ interface DrumNotesProps {
   index: number; // octave + index together give a location for the piano key
 }
 
+const kickDrum = new Tone.MembraneSynth({
+  volume: 6
+});
+
+const lowPass = new Tone.Filter({
+  frequency: 8000,
+});
+
+const snareDrum = new Tone.NoiseSynth({
+  volume: 5,
+  noise: {
+    type: 'white',
+    playbackRate: 3,
+  },
+  envelope: {
+    attack: 0.001,
+    decay: 0.20,
+    sustain: 0.15,
+    release: 0.03,
+  },
+}).connect(lowPass);
+
+
 export function DrumNotes({
   note,
   synth,
@@ -39,7 +62,6 @@ export function DrumNotes({
       onMouseDown={() => synth?.triggerAttack(`${note}`)} // Question: what is `onMouseDown`?
       onMouseUp={() => synth?.triggerRelease('+0.25')} // Question: what is `onMouseUp`?
       className={classNames('ba pointer absolute dim', {
-        'bg-black black h3': minor, // minor keys are black
         'black bg-white h4': !minor, // major keys are white
       })}
       style={{

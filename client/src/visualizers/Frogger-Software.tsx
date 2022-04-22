@@ -20,6 +20,7 @@ export const FroggerSoftwareVisualizer = new Visualizer(
 
         const levels = analyzer.getValue();
 
+        p5.beginShape();
         for (let i = 0; i < levels.length; i++) {
             const amplitude = levels[i] as number;
             let levelHeight = p5.map(amplitude, 0, 0.4, 0, height);

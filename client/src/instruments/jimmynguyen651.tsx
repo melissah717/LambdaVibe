@@ -11,10 +11,19 @@ import { Instrument, InstrumentProps } from '../Instruments';
  * Contains implementation of components for Piano.
  ** ------------------------------------------------------------------------ */
 
+
+ const sampler = new Tone.Sampler({
+	urls: {
+		// letter determines actual note 
+    E1: "https://cdn.kapwing.com/final_626576f65407960659cd4aaa_17861.mp3"
+	},
+}).toDestination();
+
+
 interface GuitarNotesProps {
   note: string; // C, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B
   duration?: string;
-  synth?: Tone.Synth; // Contains library code for making sound
+  synth?: Tone.Sampler; // Contains library code for making sound
   minor?: boolean; // True if minor key, false if major key
   octave: number;
   index: number; // octave + index together give a location for the piano key
@@ -144,7 +153,7 @@ function Guitar({ synth, setSynth }: InstrumentProps): JSX.Element {
   return (
     <div className="pv4">
       <div className="relative dib h4 w-100 ml4">
-        {Range(2, 7).map(octave =>
+        {Range(2, 7).map(octave => // increasing range increases literal pitch (second number)
           keys.map(key => {
             const isMinor = key.note.indexOf('b') !== -1;
             const note = `${key.note}${octave}`;
@@ -152,10 +161,10 @@ function Guitar({ synth, setSynth }: InstrumentProps): JSX.Element {
               <GuitarNotes
                 key={note} //react key
                 note={note}
-                synth={synth}
+                synth={sampler} // PUT SAMPLE HERE?
                 minor={isMinor}
                 octave={octave}
-                index={(octave - 2) * 7 + key.idx}
+                index={(octave - 2) * 7 + key.idx} // increasing range increases literal pitch here as well
               />
             );
           }),

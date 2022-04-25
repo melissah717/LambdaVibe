@@ -14,7 +14,7 @@ import { Instrument, InstrumentProps } from '../Instruments';
 interface DrumNotesProps {
   note: string; // C, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B
   duration?: string;
-  synth?: Tone.Synth; // Contains library code for making sound
+  synth?: Tone.Sampler; // Contains library code for making sound
   minor?: boolean; // True if minor key, false if major key
   octave: number;
   index: number; // octave + index together give a location for the piano key
@@ -41,6 +41,19 @@ const snareDrum = new Tone.NoiseSynth({
     release: 0.03,
   },
 }).connect(lowPass);
+
+const sampler = new Tone.Sampler({
+  urls: {
+    C1: "hihat.mp3",
+    D1: "kick.mp3",
+    E1: "snare.mp3",
+    F1: "tom1.mp3",
+    A1: "tom2.mp3",
+    B1: "tom3.mp3"
+  }
+,
+baseUrl: "https://tonejs.github.io/audio/drum-samples/acoustic-kit/",
+}).toDestination();
 
 
 export function DrumNotes({
@@ -108,6 +121,7 @@ function DrumNotesWithoutJSX({
   );
 }
 
+//for sine, triangle etc
 function DrumType({ title, onClick, active }: any): JSX.Element {
   return (
     <div
@@ -125,24 +139,24 @@ function DrumType({ title, onClick, active }: any): JSX.Element {
 function Drum({ synth, setSynth }: InstrumentProps): JSX.Element {
   const keys = List([
     { note: 'C', idx: 0 },
-    { note: 'Db', idx: 0.5 },
+    // { note: 'Db', idx: 0.5 },
     { note: 'D', idx: 1 },
-    { note: 'Eb', idx: 1.5 },
+    // { note: 'Eb', idx: 1.5 },
     { note: 'E', idx: 2 },
     { note: 'F', idx: 3 },
-    { note: 'Gb', idx: 3.5 },
-    { note: 'G', idx: 4 },
-    { note: 'Ab', idx: 4.5 },
-    { note: 'A', idx: 5 },
-    { note: 'Bb', idx: 5.5 },
-    { note: 'B', idx: 6 },
+    // { note: 'Gb', idx: 3.5 },
+    { note: 'A', idx: 4 },
+    // { note: 'Ab', idx: 4.5 },
+    { note: 'B', idx: 5 },
+    // { note: 'Bb', idx: 5.5 },
+    // { note: 'B', idx: 6 },
   ]);
 
   const setOscillator = (newType: Tone.ToneOscillatorType) => {
     setSynth(oldSynth => {
       oldSynth.disconnect();
 
-      return new Tone.Synth({
+      return new Tone.MembraneSynth({
         oscillator: { type: newType } as Tone.OmniOscillatorOptions,
       }).toDestination();
     });
@@ -172,7 +186,7 @@ function Drum({ synth, setSynth }: InstrumentProps): JSX.Element {
               <DrumNotes
                 key={note} //react key
                 note={note}
-                synth={synth}
+                synth={sampler}
                 minor={isMinor}
                 octave={octave}
                 index={(octave - 2) * 7 + key.idx}

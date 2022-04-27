@@ -22,12 +22,12 @@ interface SaxophoneNotesProps {
 
 const sampler = new Tone.Sampler({
   urls: {
-    C1: "../client\\src\\mp3\\samples_saxophone_C3.mp3",
-    D1: "../client\\src\\mp3\\samples_saxophone_D3.mp3",
-    E1: "../client\\src\\mp3\\samples_saxophone_E3.mp3",
-    F1: "../client\\src\\mp3\\samples_saxophone_F3.mp3",
-    A1: "../client\\src\\mp3\\samples_saxophone_A3.mp3",
-    B1: "../client\\src\\mp3\\samples_saxophone_B3.mp3"
+    C3: "https://cdn.kapwing.com/final_6267741712065600d647a32c_197210.mp3",
+    D3: "https://cdn.kapwing.com/final_626773fa5d9ef4009b32663d_477988.mp3",
+    E3: "https://cdn.kapwing.com/final_626773daa09021009a86b6b7_838830.mp3",
+    F3: "https://cdn.kapwing.com/final_626770312acf5f0077cc8299_69218.mp3",
+    A3: "https://cdn.kapwing.com/final_62677492a09021009a86b6fd_480823.mp3",
+    B3: "https://cdn.kapwing.com/final_62677470b053ee009b768539_726517.mp3"
   },
 }).toDestination();
 
@@ -58,8 +58,16 @@ export function SaxophoneNotes({
         top: 0,
         left: `${index * 2}rem`,
         zIndex: minor ? 1 : 0,
-        width: minor ? '1.5rem' : '2rem',
+        // width: minor ? '1.5rem' : '2rem',
         marginLeft: minor ? '0.25rem' : 0,
+        padding:10,
+        margin:20,
+        display:"inline-block",
+        // position:'absolute',
+        backgroundColor: "#393E41",
+        borderRadius: "50%",
+        width:100,
+        height:100,
       }}
     ></div>
   );

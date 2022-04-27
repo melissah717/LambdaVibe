@@ -23,10 +23,13 @@ import { Instrument, InstrumentProps } from '../Instruments';
 
 const sampler = new Tone.Sampler({
   urls: {
-    C1: "https://cdn.kapwing.com/final_62682213960a8700766ca7de_141750.mp3", // first
-    C2: "https://cdn.kapwing.com/final_626822a54a94a30114cae76e_537685.mp3", // second
+    E1: "https://cdn.kapwing.com/final_62682213960a8700766ca7de_141750.mp3", // first
+    F2: "https://cdn.kapwing.com/final_626822a54a94a30114cae76e_537685.mp3", // second
     C3: "https://cdn.kapwing.com/final_62682611547067008ddbca49_355155.mp3", //third
-    C4: "https://cdn.kapwing.com/final_6268298dd540f9006733fd80_779826.mp3", // fourth
+    D4: "https://cdn.kapwing.com/final_6268298dd540f9006733fd80_779826.mp3", // fourth
+
+    A4: "https://cdn.kapwing.com/final_62682213960a8700766ca7de_141750.mp3", // first repeat
+    B4: "https://cdn.kapwing.com/final_626822a54a94a30114cae76e_537685.mp3", // second repeat
   }
 
 }).toDestination();
@@ -34,7 +37,7 @@ const sampler = new Tone.Sampler({
 
 
 interface VaporwaveNotesProps {
-  note: string; // C, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B
+  note: string; // C, D, E, F, G, A, B
   duration?: string;
   synth?: Tone.Sampler; // Contains library code for making sound
   minor?: boolean; // True if minor key, false if major key
@@ -54,16 +57,7 @@ export function VaporwaveNotes({
     // 1. The JSX refers to the HTML-looking syntax within TypeScript.
     // 2. The JSX will be **transpiled** into the corresponding `React.createElement` library call.
     // 3. The curly braces `{` and `}` should remind you of string interpolation.
-    <div  className={classNames('ba absolute', {
-      
-      'black bg-white h4': !minor, 
-    })}
-    
-    style = {{
-      width: '200px',
-      marginRight: '200px'
-    }}>
-    "container but not clickable box here"
+   
     <div
       onMouseDown={() => synth?.triggerAttack(`${note}`)} // Question: what is `onMouseDown`?
       onMouseUp={() => synth?.triggerRelease('+0.25')} // Question: what is `onMouseUp`?
@@ -78,15 +72,19 @@ export function VaporwaveNotes({
         zIndex: minor ? 2 : 0,
         width: minor ? '1.5rem' : '2rem',
         marginLeft: minor ? '0.25rem' : 0,
-        height: '20px'
-      }}>
-    
+        height: '40px',
+        borderLeft: '5px solid transparent',
+        borderRight: '5px solid transparent',
+        borderBottom: '5px solid black'
+      }}
+      >
+        <div>
+          stuff?
+        </div>
 
-    </div>
-    </div>
-  );
-}
-
+      </div>
+    );
+  }
 
 
 function VaporwaveType({ title, onClick, active }: any): JSX.Element {
@@ -108,16 +106,16 @@ function VaporwaveType({ title, onClick, active }: any): JSX.Element {
 function Vaporwave({ synth, setSynth }: InstrumentProps): JSX.Element {
   const keys = List([
     { note: 'C', idx: 0},
-    { note: 'Db', idx: 0.5 },
+    // { note: 'Db', idx: 0.5 },
     { note: 'D', idx: 1 },
-    { note: 'Eb', idx: 1.5 },
+    // { note: 'Eb', idx: 1.5 },
     { note: 'E', idx: 2 },
     { note: 'F', idx: 3 },
-    { note: 'Gb', idx: 3.5 },
+  //   { note: 'Gb', idx: 3.5 },
     { note: 'G', idx: 4 },
-    { note: 'Ab', idx: 4.5 },
+  //   { note: 'Ab', idx: 4.5 },
     { note: 'A', idx: 5 },
-    { note: 'Bb', idx: 5.5 },
+  //   { note: 'Bb', idx: 5.5 },
     { note: 'B', idx: 6 },
   ]);
 

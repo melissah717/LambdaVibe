@@ -14,11 +14,22 @@ import { Instrument, InstrumentProps } from '../Instruments';
 interface SaxophoneNotesProps {
   note: string; // C, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B
   duration?: string;
-  synth?: Tone.Synth; // Contains library code for making sound
+  synth?: Tone.Sampler; // Contains library code for making sound
   minor?: boolean; // True if minor key, false if major key
   octave: number;
   index: number; // octave + index together give a location for the saxophone key
 }
+
+const sampler = new Tone.Sampler({
+  urls: {
+    C1: "../client\\src\\mp3\\samples_saxophone_C3.mp3",
+    D1: "../client\\src\\mp3\\samples_saxophone_D3.mp3",
+    E1: "../client\\src\\mp3\\samples_saxophone_E3.mp3",
+    F1: "../client\\src\\mp3\\samples_saxophone_F3.mp3",
+    A1: "../client\\src\\mp3\\samples_saxophone_A3.mp3",
+    B1: "../client\\src\\mp3\\samples_saxophone_B3.mp3"
+  },
+}).toDestination();
 
 export function SaxophoneNotes({
   note,
@@ -40,7 +51,7 @@ export function SaxophoneNotes({
       onMouseUp={() => synth?.triggerRelease('+0.25')} // Question: what is `onMouseUp`?
       className={classNames('ba pointer absolute dim', {
         'bg-black black h3': minor, // minor keys are black
-        'black bg-white h4': !minor, // major keys are white
+        // 'black bg-white h4': !minor, // major keys are white
       })}
       style={{
         // CSS
@@ -103,17 +114,18 @@ function SaxophoneType({ title, onClick, active }: any): JSX.Element {
 function Saxophone({ synth, setSynth }: InstrumentProps): JSX.Element {
   const keys = List([
     { note: 'C', idx: 0 },
-    { note: 'Db', idx: 0.5 },
+     // { note: 'Db', idx: 0.5 },
     { note: 'D', idx: 1 },
-    { note: 'Eb', idx: 1.5 },
+    // { note: 'Eb', idx: 1.5 },
     { note: 'E', idx: 2 },
     { note: 'F', idx: 3 },
-    { note: 'Gb', idx: 3.5 },
-    { note: 'G', idx: 4 },
-    { note: 'Ab', idx: 4.5 },
-    { note: 'A', idx: 5 },
-    { note: 'Bb', idx: 5.5 },
-    { note: 'B', idx: 6 },
+    // { note: 'Gb', idx: 3.5 },
+    // { note: 'G', idx: 4 },
+    // { note: 'Ab', idx: 4.5 },
+    { note: 'A', idx: 4 },
+    { note: 'B', idx: 5 },
+    // { note: 'Bb', idx: 5.5 },
+    // { note: 'B', idx: 6 },
   ]);
 
   const setOscillator = (newType: Tone.ToneOscillatorType) => {
@@ -150,7 +162,7 @@ function Saxophone({ synth, setSynth }: InstrumentProps): JSX.Element {
               <SaxophoneNotes
                 key={note} //react key
                 note={note}
-                synth={synth}
+                synth={sampler}
                 minor={isMinor}
                 octave={octave}
                 index={(octave - 2) * 7 + key.idx}

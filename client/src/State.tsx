@@ -3,7 +3,7 @@ import { List, Map } from 'immutable';
 
 // project dependencies
 import { PianoInstrument } from './instruments/Piano';
-import { BassInstrument } from './instruments/melissah717';
+import { FluteInstrument } from './instruments/melissah717';
 import { DrumInstrument } from './instruments/Frogger-Software';
 import { VaporwaveInstrument } from './instruments/jimmynguyen651';
 import { SaxophoneInstrument } from './instruments/saxgetty';
@@ -23,7 +23,7 @@ export type AppState = Map<string, any>;           // similar to { [id: string]:
  * Start with the default piano instrument.
  * Add your instruments to this list.
  */
-const instruments = List([PianoInstrument, BassInstrument, DrumInstrument, SaxophoneInstrument, VaporwaveInstrument]);  
+const instruments = List([PianoInstrument, FluteInstrument, DrumInstrument, SaxophoneInstrument, VaporwaveInstrument]);  
 // const instruments = List([PianoInstrument , BassInstrument, VaporwaveInstrument, DrumsInstrument]);      // similar to Instrument[]
 /**
  * Start with the default waveform visualizer.

@@ -10,22 +10,39 @@ import { Instrument, InstrumentProps } from '../Instruments';
 /** ------------------------------------------------------------------------ **
  * Contains implementation of components for Piano.
  ** ------------------------------------------------------------------------ */
+ const sampler = new Tone.Sampler({
+  urls: {
+    // C: "https://cdn.kapwing.com/final_626b191372f44800a54d83b9_949968.mp3",
+    // Cs: "https://cdn.kapwing.com/final_626b19e0fa90150120680af7_620289.mp3",
+    // D: "https://cdn.kapwing.com/final_626b1a42bc219500a3ed4d97_227515.mp3",
+    // Ds: "https://cdn.kapwing.com/final_626b238ff44945009e450e1b_814443.mp3",
+    // E: "https://cdn.kapwing.com/final_626b23ba3691d00065d54bd3_626170.mp3",
+    // F: "https://cdn.kapwing.com/final_626b23ef5e6fca0119e78a78_653207.mp3",
+    // Fs: "https://cdn.kapwing.com/final_626b242d8a443d0101063091_6516.mp3",
+    // G: "https://cdn.kapwing.com/final_626b24771fad34009bd7d504_609376.mp3",
+    // Gs: "https://cdn.kapwing.com/final_626b24a495210600f7b7c64a_23147.mp3",
+    // A: "https://cdn.kapwing.com/final_626b24dab0c47c0087ed08ef_117400.mp3",
+    // B1: "https://cdn.kapwing.com/final_626b250db61d82005f0730dc_421521.mp3"
+    C3: "https://cdn.kapwing.com/final_626b28264e259800a36dbf54_808371.mp3" //middle C note
+    
+  },
 
-interface BassNotesProps {
+}).toDestination();
+interface FluteNotesProps {
   note: string; // C, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B
   duration?: string;
-  synth?: Tone.Synth; // Contains library code for making sound
+  synth?: Tone.Sampler; // Contains library code for making sound
   minor?: boolean; // True if minor key, false if major key
   octave: number;
   index: number; // octave + index together give a location for the piano key
 }
 
-export function BassNotes({
+export function FluteNotes({
   note,
   synth,
   minor,
   index,
-}: BassNotesProps): JSX.Element {
+}: FluteNotesProps): JSX.Element {
   /**
    * This React component corresponds to either a major or minor key in the piano.
    * See `BassNotesWithoutJSX` for the React component without JSX.
@@ -36,8 +53,8 @@ export function BassNotes({
     // 2. The JSX will be **transpiled** into the corresponding `React.createElement` library call.
     // 3. The curly braces `{` and `}` should remind you of string interpolation.
     <div
-      onMouseDown={() => synth?.triggerAttack(`${note}`)} // Question: what is `onMouseDown`?
-      onMouseUp={() => synth?.triggerRelease('+0.25')} // Question: what is `onMouseUp`?
+      onMouseDown={() => synth?.triggerAttackRelease(`${note}`, "3n")} // Question: what is `onMouseDown`?
+      // onMouseUp={() => synth?.triggerRelease('+0.0001s')} // Question: what is `onMouseUp`?
       className={classNames('ba pointer absolute dim', {
         'bg-black black h3': minor, // minor keys are black
         'black bg-white h4': !minor, // major keys are white
@@ -55,12 +72,12 @@ export function BassNotes({
 }
 
 // eslint-disable-next-line
-function BassNotesWithoutJSX({
+function FluteNotesWithoutJSX({
   note,
   synth,
   minor,
   index,
-}: BassNotesProps): JSX.Element {
+}: FluteNotesProps): JSX.Element {
   /**
    * This React component for pedagogical purposes.
    * See `BassNotes` for the React component with JSX (JavaScript XML).
@@ -86,7 +103,7 @@ function BassNotesWithoutJSX({
   );
 }
 
-function BassType({ title, onClick, active }: any): JSX.Element {
+function FluteType({ title, onClick, active }: any): JSX.Element {
   return (
     <div
       onClick={onClick}
@@ -100,7 +117,7 @@ function BassType({ title, onClick, active }: any): JSX.Element {
   );
 }
 
-function Bass({ synth, setSynth }: InstrumentProps): JSX.Element {
+function Flute({ synth, setSynth }: InstrumentProps): JSX.Element {
   const keys = List([
     { note: 'C', idx: 0 },
     { note: 'Db', idx: 0.5 },
@@ -126,6 +143,7 @@ function Bass({ synth, setSynth }: InstrumentProps): JSX.Element {
     });
   };
 
+
   const oscillators: List<OscillatorType> = List([
     'sine',
     'sawtooth',
@@ -147,10 +165,10 @@ function Bass({ synth, setSynth }: InstrumentProps): JSX.Element {
             const isMinor = key.note.indexOf('b') !== -1;
             const note = `${key.note}${octave}`;
             return (
-              <BassNotes
+              <FluteNotes
                 key={note} //react key
                 note={note}
-                synth={synth}
+                synth={sampler}
                 minor={isMinor}
                 octave={octave}
                 index={(octave - 2) * 7 + key.idx}
@@ -161,7 +179,7 @@ function Bass({ synth, setSynth }: InstrumentProps): JSX.Element {
       </div>
       <div className={'pl4 pt4 flex'}>
         {oscillators.map(o => (
-          <BassType
+          <FluteType
             key={o}
             title={o}
             onClick={() => setOscillator(o)}
@@ -173,4 +191,4 @@ function Bass({ synth, setSynth }: InstrumentProps): JSX.Element {
   );
 }
 
-export const BassInstrument = new Instrument('Bass', Bass);
+export const FluteInstrument = new Instrument('Flute', Flute);

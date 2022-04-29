@@ -8,21 +8,14 @@ import React from 'react';
 import { Instrument, InstrumentProps } from '../Instruments';
 
 /** ------------------------------------------------------------------------ **
- * Contains implementation of components for Piano.
+ * Contains implementation of components for Vaporwave.
  ** ------------------------------------------------------------------------ */
 
 
-//  const sampler = new Tone.Sampler({
-// 	urls: {
-// 		// letter determines actual note 
-//     E1: "https://cdn.kapwing.com/final_626576f65407960659cd4aaa_17861.mp3"
-
-// 	},
- 
-// }).toDestination();
 
 const sampler = new Tone.Sampler({
   urls: {
+    	// letter determines actual note 
     E1: "https://cdn.kapwing.com/final_62682213960a8700766ca7de_141750.mp3", // first
     F2: "https://cdn.kapwing.com/final_626822a54a94a30114cae76e_537685.mp3", // second
     C3: "https://cdn.kapwing.com/final_62682611547067008ddbca49_355155.mp3", //third
@@ -57,34 +50,34 @@ export function VaporwaveNotes({
     // 1. The JSX refers to the HTML-looking syntax within TypeScript.
     // 2. The JSX will be **transpiled** into the corresponding `React.createElement` library call.
     // 3. The curly braces `{` and `}` should remind you of string interpolation.
-   
-    <div
-      onMouseDown={() => synth?.triggerAttack(`${note}`)} // Question: what is `onMouseDown`?
-      onMouseUp={() => synth?.triggerRelease('+0.25')} // Question: what is `onMouseUp`?
-      className={classNames('ba pointer absolute dim', {
-     
-        'black bg-white h4': !minor, // major keys are white
-      })}
+    <div className = "fl pa4"
       style={{
-        // CSS
-        top: 0,
-        left: `${index * 4}rem`,
-        zIndex: minor ? 2 : 0,
-        width: minor ? '1.5rem' : '2rem',
-        marginLeft: minor ? '0.25rem' : 0,
-        height: '40px',
-        borderLeft: '5px solid transparent',
-        borderRight: '5px solid transparent',
-        borderBottom: '5px solid black'
-      }}
-      >
-        <div>
-          stuff?
-        </div>
-
-      </div>
-    );
-  }
+        width: '275px',
+        position: 'relative', 
+      }}>
+      <div
+        onMouseDown={() => synth?.triggerAttack(`${note}`)} 
+        onMouseUp={() => synth?.triggerRelease('+0.25')} 
+        className={classNames('ba pointer absolute dim', {
+          'black bg-white h4': !minor, 
+        })}
+        style={{
+          //CSS
+          top: 0,
+          width: '35px',
+          marginLeft: '225px',
+          height: '25px',
+          borderRadius: '10px',
+          borderColor: '#00CAB1 ',
+          borderWidth: '3px',
+          backgroundColor: '#000000', 
+          marginRight: '25px',
+          marginTop: '-10px', // if the margin for top exceeds 0, clickability breaks. no clue why and i hate it 
+        }}
+      ></div>
+    </div>
+  );
+}
 
 
 function VaporwaveType({ title, onClick, active }: any): JSX.Element {
@@ -93,9 +86,9 @@ function VaporwaveType({ title, onClick, active }: any): JSX.Element {
       onClick={onClick}
       className={classNames('dim pointer ph2 pv1 ba mr2 br1 fw7 bw1', {
         // first color means it's selected
-        'b--black black': active,
+        'green': active,
         // second color is default appearance
-        'blue': !active,
+        'green dark': !active,
       })}
     >
       {title}
@@ -131,15 +124,7 @@ function Vaporwave({ synth, setSynth }: InstrumentProps): JSX.Element {
 
   const oscillators: List<OscillatorType> = List([
     'sine',
-    'sawtooth',
-    'square',
-    'triangle',
-    'fmsine',
-    'fmsawtooth',
-    'fmtriangle',
-    'amsine',
-    'amsawtooth',
-    'amtriangle',
+    
   ]) as List<OscillatorType>;
 
   return (
@@ -153,7 +138,7 @@ function Vaporwave({ synth, setSynth }: InstrumentProps): JSX.Element {
               <VaporwaveNotes
                 key={note} //react key
                 note={note}
-                synth={sampler} // PUT SAMPLE HERE?
+                synth={sampler} // PUT SAMPLER HERE?
                 minor={isMinor}
                 octave={octave}
                 index={(octave - 2) * 7 + key.idx} // increasing range increases literal pitch here as well
@@ -162,11 +147,11 @@ function Vaporwave({ synth, setSynth }: InstrumentProps): JSX.Element {
           }),
         )}
       </div>
-      <div className={'pl4 pt4 flex'}>
+      <div className={'pl5 pt3 flex'}>
         {oscillators.map(o => (
           <VaporwaveType
             key={o}
-            title={o}
+            title={'Vaporwave'}
             onClick={() => setOscillator(o)}
             active={synth?.oscillator.type === o}
           />

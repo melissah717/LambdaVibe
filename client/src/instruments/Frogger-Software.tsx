@@ -44,12 +44,12 @@ const snareDrum = new Tone.NoiseSynth({
 
 const sampler = new Tone.Sampler({
   urls: {
-    C1: "hihat.mp3",
-    D1: "kick.mp3",
-    E1: "snare.mp3",
-    F1: "tom1.mp3",
-    A1: "tom2.mp3",
-    B1: "tom3.mp3"
+    C3: "hihat.mp3",
+    D3: "kick.mp3",
+    E3: "snare.mp3",
+    F3: "tom1.mp3",
+    A3: "tom2.mp3",
+    B3: "tom3.mp3"
   }
 ,
 baseUrl: "https://tonejs.github.io/audio/drum-samples/acoustic-kit/",
@@ -84,6 +84,7 @@ export function DrumNotes({
         zIndex: minor ? 1 : 0,
         width: minor ? '1.5rem' : '2rem',
         marginLeft: minor ? '0.25rem' : 0,
+        height: '2rem',
       }}
     ></div>
   );

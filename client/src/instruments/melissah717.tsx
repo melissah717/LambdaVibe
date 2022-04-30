@@ -2,7 +2,7 @@
 import * as Tone from 'tone';
 import classNames from 'classnames';
 import { List, Range } from 'immutable';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 // project imports
 import { Instrument, InstrumentProps } from '../Instruments';
@@ -10,28 +10,31 @@ import { Instrument, InstrumentProps } from '../Instruments';
 /** ------------------------------------------------------------------------ **
  * Contains implementation of components for Piano.
  ** ------------------------------------------------------------------------ */
- const sampler = new Tone.Sampler({
-  urls: {
-    // C: "https://cdn.kapwing.com/final_626b191372f44800a54d83b9_949968.mp3",
-    // Cs: "https://cdn.kapwing.com/final_626b19e0fa90150120680af7_620289.mp3",
-    // D: "https://cdn.kapwing.com/final_626b1a42bc219500a3ed4d97_227515.mp3",
-    // Ds: "https://cdn.kapwing.com/final_626b238ff44945009e450e1b_814443.mp3",
-    // E: "https://cdn.kapwing.com/final_626b23ba3691d00065d54bd3_626170.mp3",
-    // F: "https://cdn.kapwing.com/final_626b23ef5e6fca0119e78a78_653207.mp3",
-    // Fs: "https://cdn.kapwing.com/final_626b242d8a443d0101063091_6516.mp3",
-    // G: "https://cdn.kapwing.com/final_626b24771fad34009bd7d504_609376.mp3",
-    // Gs: "https://cdn.kapwing.com/final_626b24a495210600f7b7c64a_23147.mp3",
-    // A: "https://cdn.kapwing.com/final_626b24dab0c47c0087ed08ef_117400.mp3",
-    // B1: "https://cdn.kapwing.com/final_626b250db61d82005f0730dc_421521.mp3"
-    C3: "https://cdn.kapwing.com/final_626b28264e259800a36dbf54_808371.mp3" //middle C note
+//  const fluteSampler = new Tone.Sampler({
+//   urls: {
+//     // C: "https://cdn.kapwing.com/final_626b191372f44800a54d83b9_949968.mp3",
+//     // Cs: "https://cdn.kapwing.com/final_626b19e0fa90150120680af7_620289.mp3",
+//     // D: "https://cdn.kapwing.com/final_626b1a42bc219500a3ed4d97_227515.mp3",
+//     // Ds: "https://cdn.kapwing.com/final_626b238ff44945009e450e1b_814443.mp3",
+//     // E: "https://cdn.kapwing.com/final_626b23ba3691d00065d54bd3_626170.mp3",
+//     // F: "https://cdn.kapwing.com/final_626b23ef5e6fca0119e78a78_653207.mp3",
+//     // Fs: "https://cdn.kapwing.com/final_626b242d8a443d0101063091_6516.mp3",
+//     // G: "https://cdn.kapwing.com/final_626b24771fad34009bd7d504_609376.mp3",
+//     // Gs: "https://cdn.kapwing.com/final_626b24a495210600f7b7c64a_23147.mp3",
+//     // A: "https://cdn.kapwing.com/final_626b24dab0c47c0087ed08ef_117400.mp3",
+//     // B1: "https://cdn.kapwing.com/final_626b250db61d82005f0730dc_421521.mp3"
+//     C3: "https://cdn.kapwing.com/final_626b28264e259800a36dbf54_808371.mp3" //middle C note
     
-  },
+//   },
 
-}).toDestination();
+// }).toDestination();
+// type NewType = Tone.Sampler;
+
+
 interface FluteNotesProps {
   note: string; // C, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B
   duration?: string;
-  synth?: Tone.Sampler; // Contains library code for making sound
+  fluteSynth: Tone.Sampler// Contains library code for making sound
   minor?: boolean; // True if minor key, false if major key
   octave: number;
   index: number; // octave + index together give a location for the piano key
@@ -39,7 +42,7 @@ interface FluteNotesProps {
 
 export function FluteNotes({
   note,
-  synth,
+  fluteSynth,
   minor,
   index,
 }: FluteNotesProps): JSX.Element {
@@ -53,7 +56,7 @@ export function FluteNotes({
     // 2. The JSX will be **transpiled** into the corresponding `React.createElement` library call.
     // 3. The curly braces `{` and `}` should remind you of string interpolation.
     <div
-      onMouseDown={() => synth?.triggerAttackRelease(`${note}`, "3n")} // Question: what is `onMouseDown`?
+      onMouseDown={() => fluteSynth?.triggerAttackRelease(`${note}`, "3n")} // Question: what is `onMouseDown`?
       // onMouseUp={() => synth?.triggerRelease('+0.0001s')} // Question: what is `onMouseUp`?
       className={classNames('ba pointer absolute dim', {
         'bg-black black h3': minor, // minor keys are black
@@ -74,19 +77,16 @@ export function FluteNotes({
 // eslint-disable-next-line
 function FluteNotesWithoutJSX({
   note,
-  synth,
+  fluteSynth,
   minor,
   index,
 }: FluteNotesProps): JSX.Element {
-  /**
-   * This React component for pedagogical purposes.
-   * See `BassNotes` for the React component with JSX (JavaScript XML).
-   */
+
   return React.createElement(
     'div',
     {
-      onMouseDown: () => synth?.triggerAttack(`${note}`),
-      onMouseUp: () => synth?.triggerRelease('+0.25'),
+      onMouseDown: () => fluteSynth?.triggerAttack(`${note}`),
+      onMouseUp: () => fluteSynth?.triggerRelease('+0.25'),
       className: classNames('ba pointer absolute dim', {
         'bg-black black h3': minor,
         'black bg-white h4': !minor,
@@ -117,7 +117,7 @@ function FluteType({ title, onClick, active }: any): JSX.Element {
   );
 }
 
-function Flute({ synth, setSynth }: InstrumentProps): JSX.Element {
+function Flute({ fluteSynth, setSynth }: InstrumentProps): JSX.Element {
   const keys = List([
     { note: 'C', idx: 0 },
     { note: 'Db', idx: 0.5 },
@@ -133,29 +133,34 @@ function Flute({ synth, setSynth }: InstrumentProps): JSX.Element {
     { note: 'B', idx: 6 },
   ]);
 
-  const setOscillator = (newType: Tone.ToneOscillatorType) => {
-    setSynth(oldSynth => {
-      oldSynth.disconnect();
+  // const setOscillator = (newType: Tone.Synth) => {
+  //   setSynth(oldSynth => {
+  //     oldSynth.disconnect();
 
-      return new Tone.Synth({
-        oscillator: { type: newType } as Tone.OmniOscillatorOptions,
-      }).toDestination();
-    });
-  };
+    //   useEffect(() => {
+    //     setOscillator('flute');
+    //     return () => {};
+    // }, []);
 
+  //     return new Tone.Synth({
+  //       oscillator: { FluteInstrument } as unknown as Tone.OmniOscillatorOptions,
+  //     }).toDestination();
+  //   });
+  // };
 
-  const oscillators: List<OscillatorType> = List([
-    'sine',
-    'sawtooth',
-    'square',
-    'triangle',
-    'fmsine',
-    'fmsawtooth',
-    'fmtriangle',
-    'amsine',
-    'amsawtooth',
-    'amtriangle',
-  ]) as List<OscillatorType>;
+  // const oscillators: List<OscillatorType> = List([
+  //   'sine',
+  //   'sawtooth',
+  //   'square',
+  //   'triangle',
+  //   'fmsine',
+  //   'fmsawtooth',
+  //   'fmtriangle',
+  //   'amsine',
+  //   'amsawtooth',
+  //   'amtriangle',
+  //   'flute'
+  // ]) as List<OscillatorType>;
 
   return (
     <div className="pv4">
@@ -168,7 +173,7 @@ function Flute({ synth, setSynth }: InstrumentProps): JSX.Element {
               <FluteNotes
                 key={note} //react key
                 note={note}
-                synth={sampler}
+                fluteSynth={fluteSynth}
                 minor={isMinor}
                 octave={octave}
                 index={(octave - 2) * 7 + key.idx}
@@ -177,17 +182,17 @@ function Flute({ synth, setSynth }: InstrumentProps): JSX.Element {
           }),
         )}
       </div>
-      <div className={'pl4 pt4 flex'}>
+      {/* <div className={'pl4 pt4 flex'}>
         {oscillators.map(o => (
           <FluteType
             key={o}
             title={o}
-            onClick={() => setOscillator(o)}
-            active={synth?.oscillator.type === o}
-          />
-        ))}
+            onClick={() => setOscillator(fluteSynth)}
+            active={fluteSynth?.oscillator.type === o}
+          /> */}
+        {/* ))} */}
       </div>
-    </div>
+    // </div>
   );
 }
 

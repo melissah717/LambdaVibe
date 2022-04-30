@@ -16,6 +16,7 @@ export interface InstrumentProps {
   name: string;
   synth: Tone.Synth;
   setSynth: (f: (oldSynth: Tone.Synth) => Tone.Synth) => void;
+  fluteSynth: Tone.Sampler;
 }
 
 export class Instrument {
@@ -46,6 +47,7 @@ interface InstrumentContainerProps {
   instrument: Instrument;
 }
 
+
 export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
   instrument,
   state,
@@ -54,14 +56,50 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
   const InstrumentComponent = instrument.component;
   const [synth, setSynth] = useState(
     new Tone.Synth({
-      oscillator: { type: 'sine' } as Tone.OmniOscillatorOptions,
+      oscillator: { type: 'triangle' } as unknown as Tone.OmniOscillatorOptions,
+    }).toDestination(),
+  );
+
+  const [fluteSynth] = useState(
+    new Tone.Sampler({
+      urls: {
+        C3: "https://cdn.kapwing.com/final_626b28264e259800a36dbf54_808371.mp3" //middle C note 
+      },
+      onload: () => {
+        console.log("Flute sounds activated");
+      }
+
     }).toDestination(),
   );
 
   const notes = state.get('notes');
 
   useEffect(() => {
-    if (notes && synth) {
+    if (instrument.name === 'Flute' && fluteSynth && notes) {
+      let eachNote = notes.split(' ');
+      let noteObjs = eachNote.map((note: string, idx: number) => ({
+        idx,
+        time: `+${idx / 4}`,
+        note,
+        velocity: 1,
+      }));
+
+      new Tone.Part((time, value) => {
+        // the value is an object which contains both the note and the velocity
+        fluteSynth.triggerAttackRelease(value.note, '4n', time, value.velocity);
+        if (value.idx === eachNote.length - 1) {
+          dispatch(new DispatchAction('STOP_SONG'));
+        }
+      }, noteObjs).start(0);
+
+      Tone.Transport.start();
+
+      return () => {
+        Tone.Transport.cancel();
+      };
+    }
+
+    else if (notes && synth) {
       let eachNote = notes.split(' ');
       let noteObjs = eachNote.map((note: string, idx: number) => ({
         idx,
@@ -85,7 +123,7 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
       };
     }
 
-    return () => {};
+    return () => { };
   }, [notes, synth, dispatch]);
 
   return (
@@ -101,6 +139,7 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
           dispatch={dispatch}
           synth={synth}
           setSynth={setSynth}
+          fluteSynth={fluteSynth}
         />
       </div>
     </div>

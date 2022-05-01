@@ -17,6 +17,9 @@ export interface InstrumentProps {
   synth: Tone.Synth;
   setSynth: (f: (oldSynth: Tone.Synth) => Tone.Synth) => void;
   fluteSynth: Tone.Sampler;
+  drumSynth: Tone.Sampler;
+  // saxSynth: Tone.Sampler;
+  // vaporSynth: Tone.Sampler;
 }
 
 export class Instrument {
@@ -71,6 +74,21 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
 
     }).toDestination(),
   );
+  
+  const [drumSynth] = useState(
+    new Tone.Sampler({
+      urls: {
+        C3: "hihat.mp3",
+        D3: "kick.mp3",
+        E3: "snare.mp3",
+        F3: "tom1.mp3",
+        G3: "tom2.mp3",
+        A3: "tom3.mp3"
+      }
+    ,
+    baseUrl: "https://tonejs.github.io/audio/drum-samples/acoustic-kit/",
+    }).toDestination(),
+  );
 
   const notes = state.get('notes');
 
@@ -98,7 +116,30 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
         Tone.Transport.cancel();
       };
     }
-
+    else if (instrument.name === 'Drum' && drumSynth && notes){ {
+        let eachNote = notes.split(' ');
+        let noteObjs = eachNote.map((note: string, idx: number) => ({
+          idx,
+          time: `+${idx / 4}`,
+          note,
+          velocity: 1,
+        }));
+  
+        new Tone.Part((time, value) => {
+          // the value is an object which contains both the note and the velocity
+          drumSynth.triggerAttackRelease(value.note, '4n', time, value.velocity);
+          if (value.idx === eachNote.length - 1) {
+            dispatch(new DispatchAction('STOP_SONG'));
+          }
+        }, noteObjs).start(0);
+  
+        Tone.Transport.start();
+  
+        return () => {
+          Tone.Transport.cancel();
+        };
+      }
+    }
     else if (notes && synth) {
       let eachNote = notes.split(' ');
       let noteObjs = eachNote.map((note: string, idx: number) => ({
@@ -140,6 +181,9 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
           synth={synth}
           setSynth={setSynth}
           fluteSynth={fluteSynth}
+          drumSynth = {drumSynth}
+          // saxSynth = {saxSynth}
+          // vaporSynth = {vaporSynth}
         />
       </div>
     </div>

@@ -14,51 +14,37 @@ import { Instrument, InstrumentProps } from '../Instruments';
 interface DrumNotesProps {
   note: string; // C, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B
   duration?: string;
-  synth?: Tone.Sampler; // Contains library code for making sound
+  drumSynth?: Tone.Sampler; // Contains library code for making sound
   minor?: boolean; // True if minor key, false if major key
   octave: number;
   index: number; // octave + index together give a location for the piano key
 }
 
-const kickDrum = new Tone.MembraneSynth({
-  volume: 6
-});
+// const kickDrum = new Tone.MembraneSynth({
+//   volume: 6
+// });
 
-const lowPass = new Tone.Filter({
-  frequency: 8000,
-});
+// const lowPass = new Tone.Filter({
+//   frequency: 8000,
+// });
 
-const snareDrum = new Tone.NoiseSynth({
-  volume: 5,
-  noise: {
-    type: 'white',
-    playbackRate: 3,
-  },
-  envelope: {
-    attack: 0.001,
-    decay: 0.20,
-    sustain: 0.15,
-    release: 0.03,
-  },
-}).connect(lowPass);
-
-const sampler = new Tone.Sampler({
-  urls: {
-    C3: "hihat.mp3",
-    D3: "kick.mp3",
-    E3: "snare.mp3",
-    F3: "tom1.mp3",
-    A3: "tom2.mp3",
-    B3: "tom3.mp3"
-  }
-,
-baseUrl: "https://tonejs.github.io/audio/drum-samples/acoustic-kit/",
-}).toDestination();
-
+// const snareDrum = new Tone.NoiseSynth({
+//   volume: 5,
+//   noise: {
+//     type: 'white',
+//     playbackRate: 3,
+//   },
+//   envelope: {
+//     attack: 0.001,
+//     decay: 0.20,
+//     sustain: 0.15,
+//     release: 0.03,
+//   },
+// }).connect(lowPass);
 
 export function DrumNotes({
   note,
-  synth,
+  drumSynth,
   minor,
   index,
 }: DrumNotesProps): JSX.Element {
@@ -72,8 +58,8 @@ export function DrumNotes({
     // 2. The JSX will be **transpiled** into the corresponding `React.createElement` library call.
     // 3. The curly braces `{` and `}` should remind you of string interpolation.
     <div
-      onMouseDown={() => synth?.triggerAttack(`${note}`)} // Question: what is `onMouseDown`?
-      onMouseUp={() => synth?.triggerRelease('+0.25')} // Question: what is `onMouseUp`?
+      onMouseDown={() => drumSynth?.triggerAttack(`${note}`)} // Question: what is `onMouseDown`?
+      onMouseUp={() => drumSynth?.triggerRelease('+0.25')} // Question: what is `onMouseUp`?
       className={classNames('ba pointer absolute dim', {
         'black bg-white h4': !minor, // major keys are white
       })}
@@ -93,7 +79,7 @@ export function DrumNotes({
 // eslint-disable-next-line
 function DrumNotesWithoutJSX({
   note,
-  synth,
+  drumSynth,
   minor,
   index,
 }: DrumNotesProps): JSX.Element {
@@ -104,8 +90,8 @@ function DrumNotesWithoutJSX({
   return React.createElement(
     'div',
     {
-      onMouseDown: () => synth?.triggerAttack(`${note}`),
-      onMouseUp: () => synth?.triggerRelease('+0.25'),
+      onMouseDown: () => drumSynth?.triggerAttack(`${note}`),
+      onMouseUp: () => drumSynth?.triggerRelease('+0.25'),
       className: classNames('ba pointer absolute dim', {
         'bg-black black h3': minor,
         'black bg-white h4': !minor,
@@ -137,44 +123,44 @@ function DrumType({ title, onClick, active }: any): JSX.Element {
   );
 }
 
-function Drum({ synth, setSynth }: InstrumentProps): JSX.Element {
+function Drum({ drumSynth, setSynth }: InstrumentProps): JSX.Element {
   const keys = List([
     { note: 'C', idx: 0 },
-    // { note: 'Db', idx: 0.5 },
+    { note: 'Db', idx: 0.5 },
     { note: 'D', idx: 1 },
-    // { note: 'Eb', idx: 1.5 },
+    { note: 'Eb', idx: 1.5 },
     { note: 'E', idx: 2 },
     { note: 'F', idx: 3 },
-    // { note: 'Gb', idx: 3.5 },
+    { note: 'Gb', idx: 3.5 },
     { note: 'A', idx: 4 },
-    // { note: 'Ab', idx: 4.5 },
+    { note: 'Ab', idx: 4.5 },
     { note: 'B', idx: 5 },
-    // { note: 'Bb', idx: 5.5 },
-    // { note: 'B', idx: 6 },
+    { note: 'Bb', idx: 5.5 },
+    { note: 'B', idx: 6 },
   ]);
 
-  const setOscillator = (newType: Tone.ToneOscillatorType) => {
-    setSynth(oldSynth => {
-      oldSynth.disconnect();
+  // const setOscillator = (newType: Tone.ToneOscillatorType) => {
+  //   setSynth(oldSynth => {
+  //     oldSynth.disconnect();
 
-      return new Tone.MembraneSynth({
-        oscillator: { type: newType } as Tone.OmniOscillatorOptions,
-      }).toDestination();
-    });
-  };
+  //     return new Tone.MembraneSynth({
+  //       oscillator: { type: newType } as Tone.OmniOscillatorOptions,
+  //     }).toDestination();
+  //   });
+  // };
 
-  const oscillators: List<OscillatorType> = List([
-    'sine',
-    'sawtooth',
-    'square',
-    'triangle',
-    'fmsine',
-    'fmsawtooth',
-    'fmtriangle',
-    'amsine',
-    'amsawtooth',
-    'amtriangle',
-  ]) as List<OscillatorType>;
+  // const oscillators: List<OscillatorType> = List([
+  //   'sine',
+  //   'sawtooth',
+  //   'square',
+  //   'triangle',
+  //   'fmsine',
+  //   'fmsawtooth',
+  //   'fmtriangle',
+  //   'amsine',
+  //   'amsawtooth',
+  //   'amtriangle',
+  // ]) as List<OscillatorType>;
 
   return (
     <div className="pv4">
@@ -187,7 +173,7 @@ function Drum({ synth, setSynth }: InstrumentProps): JSX.Element {
               <DrumNotes
                 key={note} //react key
                 note={note}
-                synth={sampler}
+                drumSynth={drumSynth}
                 minor={isMinor}
                 octave={octave}
                 index={(octave - 2) * 7 + key.idx}
@@ -196,17 +182,17 @@ function Drum({ synth, setSynth }: InstrumentProps): JSX.Element {
           }),
         )}
       </div>
-      <div className={'pl4 pt4 flex'}>
+      {/* <div className={'pl4 pt4 flex'}>
         {oscillators.map(o => (
           <DrumType
             key={o}
             title={o}
-            onClick={() => setOscillator(o)}
-            active={synth?.oscillator.type === o}
-          />
-        ))}
-      </div>
-    </div>
+            onClick={() => setOscillator(fluteSynth)}
+            active={drumSynth?.oscillator.type === o}
+          /> */}
+        {/* ))} */}
+        </div>
+    // </div>
   );
 }
 

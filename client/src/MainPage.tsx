@@ -99,11 +99,11 @@ function ShowWelcomePanel(): JSX.Element {
     >
       <div className="mw6 lh-copy mb4">
         <Music32 />
-        <div className="f3 fw7 mb2">Welcome to the case study.</div>
+        <div className="f3 fw7 mb2">Welcome to LambdaVibe: JM Residence edition</div>
         <div className="f4 mb3">
           Select an instrument and a visualizer on the left to serve some fresh beats.
         </div>
-        <div className="f5">The UI is yours to design. Express yourself.</div>
+        <div className="f5"></div>
       </div>
     </div>
   );

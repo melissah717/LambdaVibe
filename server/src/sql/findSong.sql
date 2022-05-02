@@ -1,1 +1,1 @@
-select * from songs where song_title like %${searchTerm}%;
+select * from songs where song_title like %?%;

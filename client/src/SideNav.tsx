@@ -1,7 +1,7 @@
 // 3rd party library imports
 import classNames from 'classnames';
 import { List } from 'immutable';
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import {
   RadioButton20,
@@ -72,7 +72,7 @@ export function SideNav({ state, dispatch }: SideNavProps): JSX.Element {
  * SideNav Sub-Components
  ** ------------------------------------------------------------------------ */
 
- function InstrumentsNav({ state }: SideNavProps): JSX.Element {
+function InstrumentsNav({ state }: SideNavProps): JSX.Element {
   /** 
    *  InstrumentsNav
    *  |-----------------|
@@ -85,7 +85,7 @@ export function SideNav({ state, dispatch }: SideNavProps): JSX.Element {
    *  |      ...        |
    *  |-----------------|
   */
-  
+
   const instruments: List<Instrument> = state.get('instruments');
   const activeInstrument = state.get('instrument')?.name;
   const location = useLocation();
@@ -156,10 +156,25 @@ function SongsNav({ state, dispatch }: SideNavProps): JSX.Element {
    *  |-----------------|
   */
 
+
   const songs: List<any> = state.get('songs', List());
+  const [searchTerm, setSearchTerm] = useState("")
   return (
     <Section title="Playlist">
-      {songs.map(song => (
+      <input
+        type="text"
+        placeholder='Search...'
+        onChange={(event) => {
+          setSearchTerm(event.target.value)
+        }}
+      />
+      {songs.filter((song) => {
+        if(searchTerm == ""){
+          return song
+        } else if (song.get('songTitle').toLowerCase().includes(searchTerm.toLowerCase())){
+          return song
+        }
+      }).map(song => (
         <div
           key={song.get('id')}
           className="f6 pointer underline flex items-center no-underline i dim"
@@ -184,7 +199,7 @@ function SongsNav({ state, dispatch }: SideNavProps): JSX.Element {
  * Radio Button
  ** ------------------------------------- */
 
- type RadioButtonProps = {
+type RadioButtonProps = {
   to: any,
   text: string,
   active: boolean,

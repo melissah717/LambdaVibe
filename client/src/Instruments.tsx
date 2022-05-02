@@ -78,12 +78,12 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
   const [drumSynth] = useState(
     new Tone.Sampler({
       urls: {
-        C3: "tom1.mp3",
-        D3: "tom2.mp3",
-        E3: "tom3.mp3",
-        F3: "snare.mp3",
-        G3: "kick.mp3",
-        A3: "hihat.mp3"
+        C4: "tom1.mp3",
+        D4: "tom2.mp3",
+        E4: "tom3.mp3",
+        F4: "snare.mp3",
+        G4: "kick.mp3",
+        A4: "hihat.mp3"
       }
     ,
     baseUrl: "https://tonejs.github.io/audio/drum-samples/acoustic-kit/",
@@ -93,7 +93,7 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
   const [saxSynth] = useState( 
     new Tone.Sampler({
     urls: {
-      C3: "https://cdn.kapwing.com/final_6267741712065600d647a32c_197210.mp3" //middle C note
+      C5: "https://cdn.kapwing.com/final_6267741712065600d647a32c_197210.mp3" //middle C note
       // D3: "https://cdn.kapwing.com/final_626773fa5d9ef4009b32663d_477988.mp3",
       // E3: "https://cdn.kapwing.com/final_626773daa09021009a86b6b7_838830.mp3",
       // F3: "https://cdn.kapwing.com/final_626770312acf5f0077cc8299_69218.mp3",

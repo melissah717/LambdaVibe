@@ -70,7 +70,7 @@ export function DrumNotes({
         left: `${index * 2}rem`,
         width: '1rem',
         marginLeft: 0,
-        height: '2rem',
+        height: '4rem',
       }}
     ></div>
   );

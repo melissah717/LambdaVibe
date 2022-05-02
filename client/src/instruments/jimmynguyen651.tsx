@@ -13,26 +13,26 @@ import { Instrument, InstrumentProps } from '../Instruments';
 
 
 
-const sampler = new Tone.Sampler({
-  urls: {
-    	// letter determines actual note 
-    E1: "https://cdn.kapwing.com/final_62682213960a8700766ca7de_141750.mp3", // first
-    F2: "https://cdn.kapwing.com/final_626822a54a94a30114cae76e_537685.mp3", // second
-    C3: "https://cdn.kapwing.com/final_62682611547067008ddbca49_355155.mp3", //third
-    D4: "https://cdn.kapwing.com/final_6268298dd540f9006733fd80_779826.mp3", // fourth
+// const sampler = new Tone.Sampler({
+//   urls: {
+//     	// letter determines actual note 
+//     E1: "https://cdn.kapwing.com/final_62682213960a8700766ca7de_141750.mp3", // first
+//     F2: "https://cdn.kapwing.com/final_626822a54a94a30114cae76e_537685.mp3", // second
+//     C3: "https://cdn.kapwing.com/final_62682611547067008ddbca49_355155.mp3", //third
+//     D4: "https://cdn.kapwing.com/final_6268298dd540f9006733fd80_779826.mp3", // fourth
 
-    A4: "https://cdn.kapwing.com/final_62682213960a8700766ca7de_141750.mp3", // first repeat
-    B4: "https://cdn.kapwing.com/final_626822a54a94a30114cae76e_537685.mp3", // second repeat
-  }
+//     A4: "https://cdn.kapwing.com/final_62682213960a8700766ca7de_141750.mp3", // first repeat
+//     B4: "https://cdn.kapwing.com/final_626822a54a94a30114cae76e_537685.mp3", // second repeat
+//   }
 
-}).toDestination();
+// }).toDestination();
 
 
 
 interface VaporwaveNotesProps {
   note: string; // C, D, E, F, G, A, B
   duration?: string;
-  synth?: Tone.Sampler; // Contains library code for making sound
+  vaporSynth?: Tone.Sampler; // Contains library code for making sound
   minor?: boolean; // True if minor key, false if major key
   octave: number;
   index: number; // octave + index together give a location for the piano key
@@ -40,7 +40,7 @@ interface VaporwaveNotesProps {
 
 export function VaporwaveNotes({
   note,
-  synth,
+  vaporSynth,
   minor,
   index,
 }: VaporwaveNotesProps): JSX.Element {
@@ -56,8 +56,8 @@ export function VaporwaveNotes({
         position: 'relative', 
       }}>
       <div
-        onMouseDown={() => synth?.triggerAttack(`${note}`)} 
-        onMouseUp={() => synth?.triggerRelease('+0.25')} 
+        onMouseDown={() => vaporSynth?.triggerAttack(`${note}`)} 
+        onMouseUp={() => vaporSynth?.triggerRelease('+0.25')} 
         className={classNames('ba pointer absolute dim', {
           'black bg-white h4': !minor, 
         })}
@@ -96,41 +96,41 @@ function VaporwaveType({ title, onClick, active }: any): JSX.Element {
   );
 }
 
-function Vaporwave({ synth, setSynth }: InstrumentProps): JSX.Element {
+function Vaporwave({ vaporSynth, setSynth }: InstrumentProps): JSX.Element {
   const keys = List([
     { note: 'C', idx: 0},
-    // { note: 'Db', idx: 0.5 },
+    { note: 'Db', idx: 0.5 },
     { note: 'D', idx: 1 },
-    // { note: 'Eb', idx: 1.5 },
+    { note: 'Eb', idx: 1.5 },
     { note: 'E', idx: 2 },
     { note: 'F', idx: 3 },
-  //   { note: 'Gb', idx: 3.5 },
+    { note: 'Gb', idx: 3.5 },
     { note: 'G', idx: 4 },
-  //   { note: 'Ab', idx: 4.5 },
+    { note: 'Ab', idx: 4.5 },
     { note: 'A', idx: 5 },
-  //   { note: 'Bb', idx: 5.5 },
+    { note: 'Bb', idx: 5.5 },
     { note: 'B', idx: 6 },
   ]);
 
-  const setOscillator = (newType: Tone.ToneOscillatorType) => {
-    setSynth(oldSynth => {
-      oldSynth.disconnect();
+  // const setOscillator = (newType: Tone.ToneOscillatorType) => {
+  //   setSynth(oldSynth => {
+  //     oldSynth.disconnect();
 
-      return new Tone.Synth({
-        oscillator: { type: newType } as Tone.OmniOscillatorOptions,
-      }).toDestination();
-    });
-  };
+  //     return new Tone.Synth({
+  //       oscillator: { type: newType } as Tone.OmniOscillatorOptions,
+  //     }).toDestination();
+  //   });
+  // };
 
-  const oscillators: List<OscillatorType> = List([
-    'sine',
+  // const oscillators: List<OscillatorType> = List([
+  //   'sine',
     
-  ]) as List<OscillatorType>;
+  // ]) as List<OscillatorType>;
 
   return (
     <div className="pv4">
       <div className="relative dib h4 w-100 ml4">
-        {Range(2, 7).map(octave => // increasing range increases literal pitch (second number)
+        {Range(2, 7).map(octave =>
           keys.map(key => {
             const isMinor = key.note.indexOf('b') !== -1;
             const note = `${key.note}${octave}`;
@@ -138,27 +138,26 @@ function Vaporwave({ synth, setSynth }: InstrumentProps): JSX.Element {
               <VaporwaveNotes
                 key={note} //react key
                 note={note}
-                synth={sampler} // PUT SAMPLER HERE?
+                vaporSynth={vaporSynth}
                 minor={isMinor}
                 octave={octave}
-                index={(octave - 2) * 7 + key.idx} // increasing range increases literal pitch here as well
+                index={(octave - 2) * 7 + key.idx}
               />
             );
           }),
         )}
       </div>
-      <div className={'pl5 pt3 flex'}>
+      {/* <div className={'pl4 pt4 flex'}>
         {oscillators.map(o => (
-          <VaporwaveType
+          <FluteType
             key={o}
-            title={'Vaporwave'}
-            onClick={() => setOscillator(o)}
-            active={synth?.oscillator.type === o}
-          />
-        ))}
+            title={o}
+            onClick={() => setOscillator(fluteSynth)}
+            active={fluteSynth?.oscillator.type === o}
+          /> */}
+        {/* ))} */}
       </div>
-    </div>
+    // </div>
   );
 }
-
 export const VaporwaveInstrument = new Instrument('Vaporwave', Vaporwave);

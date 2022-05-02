@@ -19,7 +19,7 @@ export interface InstrumentProps {
   fluteSynth: Tone.Sampler;
   drumSynth: Tone.Sampler;
   saxSynth: Tone.Sampler;
-  // vaporSynth: Tone.Sampler;
+  vaporSynth: Tone.Sampler;
 }
 
 export class Instrument {
@@ -74,80 +74,82 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
 
     }).toDestination(),
   );
-  
+
   const [drumSynth] = useState(
     new Tone.Sampler({
       urls: {
-        C4: "tom1.mp3",
-        D4: "tom2.mp3",
-        E4: "tom3.mp3",
-        F4: "snare.mp3",
-        G4: "kick.mp3",
-        A4: "hihat.mp3"
+        C3: "tom1.mp3",
+        D3: "tom2.mp3",
+        E3: "tom3.mp3",
+        F3: "snare.mp3",
+        G3: "kick.mp3",
+        A3: "hihat.mp3"
       }
-    ,
-    baseUrl: "https://tonejs.github.io/audio/drum-samples/acoustic-kit/",
+      ,
+      baseUrl: "https://tonejs.github.io/audio/drum-samples/acoustic-kit/",
     }).toDestination(),
   );
 
-  const [saxSynth] = useState( 
+  const [saxSynth] = useState(
+    new Tone.Sampler({
+      urls: {
+        C3: "https://cdn.kapwing.com/final_6267741712065600d647a32c_197210.mp3" //middle C note
+        // D3: "https://cdn.kapwing.com/final_626773fa5d9ef4009b32663d_477988.mp3",
+        // E3: "https://cdn.kapwing.com/final_626773daa09021009a86b6b7_838830.mp3",
+        // F3: "https://cdn.kapwing.com/final_626770312acf5f0077cc8299_69218.mp3",
+        // A3: "https://cdn.kapwing.com/final_62677492a09021009a86b6fd_480823.mp3",
+        // B3: "https://cdn.kapwing.com/final_62677470b053ee009b768539_726517.mp3"
+      },
+    }).toDestination(),
+  );
+
+  const [vaporSynth] = useState(
     new Tone.Sampler({
     urls: {
-      C5: "https://cdn.kapwing.com/final_6267741712065600d647a32c_197210.mp3" //middle C note
-      // D3: "https://cdn.kapwing.com/final_626773fa5d9ef4009b32663d_477988.mp3",
-      // E3: "https://cdn.kapwing.com/final_626773daa09021009a86b6b7_838830.mp3",
-      // F3: "https://cdn.kapwing.com/final_626770312acf5f0077cc8299_69218.mp3",
-      // A3: "https://cdn.kapwing.com/final_62677492a09021009a86b6fd_480823.mp3",
-      // B3: "https://cdn.kapwing.com/final_62677470b053ee009b768539_726517.mp3"
+        // letter determines actual note 
+      E1: "https://cdn.kapwing.com/final_62682213960a8700766ca7de_141750.mp3", // first
+      // F2: "https://cdn.kapwing.com/final_626822a54a94a30114cae76e_537685.mp3", // second
+      C3: "https://cdn.kapwing.com/final_62682611547067008ddbca49_355155.mp3" //third
+      // D4: "https://cdn.kapwing.com/final_6268298dd540f9006733fd80_779826.mp3", // fourth
+
+      // A4: "https://cdn.kapwing.com/final_62682213960a8700766ca7de_141750.mp3", // first repeat
+      // B4: "https://cdn.kapwing.com/final_626822a54a94a30114cae76e_537685.mp3", // second repeat
     },
   }).toDestination(),
   );
 
   const notes = state.get('notes');
 
+
   useEffect(() => {
     if (instrument.name === 'Flute' && fluteSynth && notes) {
-      let durationOfNote: number
-      let eachNote = notes.split(' ');
-      let noteObjs = eachNote.map((note: string, idx: number) => ({
-        idx,
-        time: `+${idx / 2}`, //half note
-        note,
-        velocity: 1,
+      {
+        let eachNote = notes.split(' ');
+        let noteObjs = eachNote.map((note: string, idx: number) => ({
+          idx,
+          time: `+${idx / 2}`,
+          note,
+          velocity: 1,
+        }));
+
+        new Tone.Part((time, value) => {
+          // the value is an object which contains both the note and the velocity
+          fluteSynth.triggerAttackRelease(value.note, '4n', time, value.velocity);
+          if (value.idx === eachNote.length - 1) {
+            dispatch(new DispatchAction('STOP_SONG'));
+          }
+        }, noteObjs).start(0);
+
+        Tone.Transport.start();
+
+        return () => {
+          Tone.Transport.cancel();
+        };
       }
-      ));
-
-  new Tone.Part((time, value) => {
-        fluteSynth.triggerAttackRelease(value.note, '4n', time, value.velocity);
-        // the value is an object which contains both the note and the velocity
-        // if (noteObjs[0] === 1){ //whole notes
-        //   fluteSynth.triggerAttackRelease(value.note, 'n', time, value.velocity);
-        // }
-        // else if (value.idx%2 ===0){ //half notes
-        //   fluteSynth.triggerAttackRelease(value.note, '2n', time, value.velocity);
-        // }
-        // else if (noteObjs[0] === 4){ //quarter notes
-        //   fluteSynth.triggerAttackRelease(value.note, '4n', time, value.velocity);
-        // }
-        // else if (value.idx%8 ===0){ //eighth notes
-        //   fluteSynth.triggerAttackRelease(value.note, '8n', time, value.velocity);
-        // }
-        // else if (value.idx%16 ===0){ //sixteenth notes
-        //   fluteSynth.triggerAttackRelease(value.note, '16n', time, value.velocity);
-        // }
-        if (value.idx === eachNote.length - 1) {
-          dispatch(new DispatchAction('STOP_SONG'));
-        }
-      }, noteObjs).start(0);
-
-      Tone.Transport.start();
-
-      return () => {
-        Tone.Transport.cancel();
-      };
     }
 
-    else if (instrument.name === 'Drum' && drumSynth && notes){ {
+    else if (instrument.name === 'Drum' && drumSynth && notes) {
+      {
         let eachNote = notes.split(' ');
         let noteObjs = eachNote.map((note: string, idx: number) => ({
           idx,
@@ -155,7 +157,7 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
           note,
           velocity: 1,
         }));
-  
+
         new Tone.Part((time, value) => {
           // the value is an object which contains both the note and the velocity
           drumSynth.triggerAttackRelease(value.note, '4n', time, value.velocity);
@@ -163,39 +165,66 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
             dispatch(new DispatchAction('STOP_SONG'));
           }
         }, noteObjs).start(0);
-  
+
         Tone.Transport.start();
-  
+
         return () => {
           Tone.Transport.cancel();
         };
       }
     }
 
-    else if (instrument.name === 'Saxophone' && saxSynth && notes){ {
-      let eachNote = notes.split(' ');
-      let noteObjs = eachNote.map((note: string, idx: number) => ({
-        idx,
-        time: `+${idx / 2}`,
-        note,
-        velocity: 1,
-      }));
+    else if (instrument.name === 'Saxophone' && saxSynth && notes) {
+      {
+        let eachNote = notes.split(' ');
+        let noteObjs = eachNote.map((note: string, idx: number) => ({
+          idx,
+          time: `+${idx / 2}`,
+          note,
+          velocity: 1,
+        }));
 
-      new Tone.Part((time, value) => {
-        // the value is an object which contains both the note and the velocity
-        saxSynth.triggerAttackRelease(value.note, '4n', time, value.velocity);
-        if (value.idx === eachNote.length - 1) {
-          dispatch(new DispatchAction('STOP_SONG'));
-        }
-      }, noteObjs).start(0);
+        new Tone.Part((time, value) => {
+          // the value is an object which contains both the note and the velocity
+          saxSynth.triggerAttackRelease(value.note, '4n', time, value.velocity);
+          if (value.idx === eachNote.length - 1) {
+            dispatch(new DispatchAction('STOP_SONG'));
+          }
+        }, noteObjs).start(0);
 
-      Tone.Transport.start();
+        Tone.Transport.start();
 
-      return () => {
-        Tone.Transport.cancel();
-      };
+        return () => {
+          Tone.Transport.cancel();
+        };
+      }
     }
-  }
+
+    else if (instrument.name === 'Vaporwave' && vaporSynth && notes) {
+      {
+        let eachNote = notes.split(' ');
+        let noteObjs = eachNote.map((note: string, idx: number) => ({
+          idx,
+          time: `+${idx / 2}`,
+          note,
+          velocity: 1,
+        }));
+
+        new Tone.Part((time, value) => {
+          // the value is an object which contains both the note and the velocity
+          vaporSynth.triggerAttackRelease(value.note, '4n', time, value.velocity);
+          if (value.idx === eachNote.length - 1) {
+            dispatch(new DispatchAction('STOP_SONG'));
+          }
+        }, noteObjs).start(0);
+
+        Tone.Transport.start();
+
+        return () => {
+          Tone.Transport.cancel();
+        };
+      }
+    }
 
 
     else if (notes && synth) {
@@ -239,11 +268,12 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
           synth={synth}
           setSynth={setSynth}
           fluteSynth={fluteSynth}
-          drumSynth = {drumSynth}
-          saxSynth = {saxSynth}
-          // vaporSynth = {vaporSynth}
+          drumSynth={drumSynth}
+          saxSynth={saxSynth}
+        vaporSynth = {vaporSynth}
         />
       </div>
     </div>
   );
 };
+

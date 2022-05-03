@@ -20,28 +20,6 @@ interface DrumNotesProps {
   index: number; // octave + index together give a location for the piano key
 }
 
-// const kickDrum = new Tone.MembraneSynth({
-//   volume: 6
-// });
-
-// const lowPass = new Tone.Filter({
-//   frequency: 8000,
-// });
-
-// const snareDrum = new Tone.NoiseSynth({
-//   volume: 5,
-//   noise: {
-//     type: 'white',
-//     playbackRate: 3,
-//   },
-//   envelope: {
-//     attack: 0.001,
-//     decay: 0.20,
-//     sustain: 0.15,
-//     release: 0.03,
-//   },
-// }).connect(lowPass);
-
 export function DrumNotes({
   note,
   drumSynth,
@@ -60,17 +38,17 @@ export function DrumNotes({
     <div
       onMouseDown={() => drumSynth?.triggerAttack(`${note}`)} // Question: what is `onMouseDown`?
       onMouseUp={() => drumSynth?.triggerRelease('+0.25')} // Question: what is `onMouseUp`?
-      className={classNames('ba pointer absolute dim', {
-        'black bg-white h4': !minor, // major keys are white
-        // 'bg-black black h3': minor, // minor keys are black
+      className={classNames('grow ba rotate-45 pointer static dib bg-black pa3 overflow-auto-ns  ', {
+        'bg-white yellow h2-ns bw5': !minor, // major keys are white
+        'bg-white light-yellow h2-ns bw5': minor, // minor keys are black
       })}
       style={{
         // CSS
         top: 0,
         left: `${index * 2}rem`,
-        width: '1rem',
-        marginLeft: 0,
-        height: '4rem',
+        width: '0.1rem',
+        marginLeft: 5,
+        borderRadius: '50%'
       }}
     ></div>
   );
@@ -163,9 +141,9 @@ function Drum({ drumSynth, setSynth }: InstrumentProps): JSX.Element {
   // ]) as List<OscillatorType>;
 
   return (
-    <div className="pv4">
-      <div className="relative dib h4 w-100 ml4">
-        {Range(2, 7).map(octave =>
+    <div className="ph4-ns bg-black white">
+      <div className="ml1 mr0 justify-center-ns">
+        {Range(2, 4).map(octave =>
           keys.map(key => {
             const isMinor = key.note.indexOf('b') !== -1;
             const note = `${key.note}${octave}`;

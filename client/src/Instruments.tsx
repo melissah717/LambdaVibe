@@ -36,7 +36,7 @@ function TopNav({ name }: { name: string }) {
   return (
     <div
       className={
-        'w-100 h3 bb b--light-gray flex justify-between items-center ph4'
+        'pl4 top-0 light-green f2 fw9-ns tracked-tight-ns pt4 pl3 justify-center-ns'
       }
     >
       <div>{name}</div>
@@ -257,9 +257,11 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
   return (
     <div>
       <TopNav name={instrument.name} />
+      //STYLING FOR THE BOX THE INSTRUMENT IS IN
       <div
-        className={'bg-white absolute right-0 left-0'}
-        style={{ top: '4rem' }}
+        className={'bg-black relative right-0 left-0 f-6-ns'}
+        style={{ 
+          top: '1rem'}}
       >
         <InstrumentComponent
           name={instrument.name}

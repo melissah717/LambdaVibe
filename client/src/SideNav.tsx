@@ -54,11 +54,11 @@ export function SideNav({ state, dispatch }: SideNavProps): JSX.Element {
   */
 
   return (
-    <div className="absolute top-0 left-0 bottom-0 w5 z-1 shadow-1 bg-white flex flex-column">
-      <div className="h3 fw7 f5 flex items-center pl3 bb b--light-gray">
+    <div className="absolute top-0 left-0 bottom-0 w5.5 z-1 shadow-1 bg-black flex flex-column white">
+      <div className="left-2 top-0 light-yellow f2 fw9-ns tracked-tight-ns pt4 pl3">
         JM Residence
       </div>
-      <div className="flex-auto">
+      <div className="flex-auto fw1 f5-ns">
         <InstrumentsNav state={state} dispatch={dispatch} />
         <VisualizersNav state={state} dispatch={dispatch} />
         <SongsNav state={state} dispatch={dispatch} />
@@ -162,6 +162,7 @@ function SongsNav({ state, dispatch }: SideNavProps): JSX.Element {
   return (
     <Section title="Playlist">
       <input
+        className="bg-black white"
         type="text"
         placeholder='Search...'
         onChange={(event) => {
@@ -177,7 +178,7 @@ function SongsNav({ state, dispatch }: SideNavProps): JSX.Element {
       }).map(song => (
         <div
           key={song.get('id')}
-          className="f6 pointer underline flex items-center no-underline i dim"
+          className="top-0 white fw2-ns tracked-tight-ns f5 pointer underline flex items-center no-underline dim"
           onClick={() =>
             dispatch(new DispatchAction('PLAY_SONG', { id: song.get('id') }))
           }
@@ -210,7 +211,7 @@ function RadioButton({ to, text, active, onClick }: RadioButtonProps): JSX.Eleme
   return (
     <Link to={to} className="no-underline">
       <div
-        className={classNames('f6 flex items-center black', { fw7: active })}
+        className={classNames('bg-black f5 flex items-left white', { fw7: active })}
         onClick={onClick}
       >
         {active ? (
@@ -231,9 +232,9 @@ function RadioButton({ to, text, active, onClick }: RadioButtonProps): JSX.Eleme
 
 const Section: React.FC<{ title: string }> = ({ title, children }) => {
   return (
-    <div className="flex flex-column h-25 bb b--light-gray pa3">
-      <div className="fw7 mb2">{title} </div>
-      <div className="flex-auto overflow-scroll">{children}</div>
+    <div className="flex flex-column h-25 bb bw1-ns b--light-gray pa3 bg-black white">
+      <div className="left-2 top-0 white f3 bt-m fw9-ns tracked-tight-ns pt4 pink">{title} </div>
+      <div className="flex-auto overflow-auto-ns pl1 pt-ns">{children}</div>
     </div>
   );
 };

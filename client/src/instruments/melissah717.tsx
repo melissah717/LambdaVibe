@@ -58,7 +58,7 @@ export function FluteNotes({
     <div
       onMouseDown={() => fluteSynth?.triggerAttackRelease(`${note}`, "3n")} // Question: what is `onMouseDown`?
       // onMouseUp={() => synth?.triggerRelease('+0.0001s')} // Question: what is `onMouseUp`?
-      className={classNames('ba pointer absolute dim', {
+      className={classNames('ba pointer absolute dim black', {
         'bg-black black h3': minor, // minor keys are black
         'black bg-white h4': !minor, // major keys are white
       })}
@@ -163,8 +163,8 @@ function Flute({ fluteSynth, setSynth }: InstrumentProps): JSX.Element {
   // ]) as List<OscillatorType>;
 
   return (
-    <div className="pv4">
-      <div className="relative dib h4 w-100 ml4">
+    <div className="ph4-ns bg-black white">
+      <div className="relative dib h2 w-100 ml7 mr0 justify-center-ns">
         {Range(2, 7).map(octave =>
           keys.map(key => {
             const isMinor = key.note.indexOf('b') !== -1;

@@ -36,7 +36,7 @@ function TopNav({ name }: { name: string }) {
   return (
     <div
       className={
-        'pl4 top-0 light-green f2 fw9-ns tracked-tight-ns pt4 pl3 justify-center-ns'
+        'ml5 top-0 light-green f2 fw9-ns tracked-tight-ns pt4 pl3 justify-center-ns'
       }
     >
       <div>{name}</div>
@@ -134,7 +134,7 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
 
         new Tone.Part((time, value) => {
           // the value is an object which contains both the note and the velocity
-          fluteSynth.triggerAttackRelease(value.note, '4n', time, value.velocity);
+          fluteSynth.triggerAttackRelease(value.note, '3n', time, value.velocity);
           if (value.idx === eachNote.length - 1) {
             dispatch(new DispatchAction('STOP_SONG'));
           }
@@ -257,9 +257,8 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
   return (
     <div>
       <TopNav name={instrument.name} />
-      //STYLING FOR THE BOX THE INSTRUMENT IS IN
       <div
-        className={'bg-black relative right-0 left-0 f-6-ns'}
+        className={'bg-black relative right-0 left-0 f-6-ns pl0'}
         style={{ 
           top: '1rem'}}
       >
@@ -272,7 +271,7 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
           fluteSynth={fluteSynth}
           drumSynth={drumSynth}
           saxSynth={saxSynth}
-        vaporSynth = {vaporSynth}
+          vaporSynth = {vaporSynth}
         />
       </div>
     </div>

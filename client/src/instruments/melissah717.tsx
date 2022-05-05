@@ -51,26 +51,29 @@ export function FluteNotes({
    * See `BassNotesWithoutJSX` for the React component without JSX.
    */
   return (
-    // Observations:
-    // 1. The JSX refers to the HTML-looking syntax within TypeScript.
-    // 2. The JSX will be **transpiled** into the corresponding `React.createElement` library call.
-    // 3. The curly braces `{` and `}` should remind you of string interpolation.
-    <div
-      onMouseDown={() => fluteSynth?.triggerAttackRelease(`${note}`, "3n")} // Question: what is `onMouseDown`?
-      // onMouseUp={() => synth?.triggerRelease('+0.0001s')} // Question: what is `onMouseUp`?
-      className={classNames('ba pointer absolute dim black', {
-        'bg-black black h3': minor, // minor keys are black
-        'black bg-white h4': !minor, // major keys are white
+    <div 
+    className="mt6 ph2-ns bg-moon-gray w-80 center-ns br4 relative">
+      <div 
+        className="fl-w-60 inline-flex br ml0-ns absolute">
+        <div
+          onMouseDown={() => fluteSynth?.triggerAttackRelease(`${note}`, "4n")}
+          className={classNames('pa pt4 pointer absolute dim', {
+            'bg-gray br2': minor, // minor keys
+            'bg-black h2-ns br4': !minor, // major keys
       })}
       style={{
         // CSS
-        top: 0,
-        left: `${index * 2}rem`,
-        zIndex: minor ? 1 : 0,
-        width: minor ? '1.5rem' : '2rem',
-        marginLeft: minor ? '0.25rem' : 0,
+        // top: 0,
+        // borderColor: minor? 'moon-gray' : 'moon-gray',
+        left: `${index * 4}rem`,
+        width: minor ? '1rem' : '2rem',
+        marginLeft: minor ? '0.6rem' : '0.1rem',
+        // paddingBottom: minor ? '1.5rem' : '2rem',
+        // borderRadius: '40%'
       }}
     ></div>
+    </div>
+    </div>
   );
 }
 
@@ -163,9 +166,8 @@ function Flute({ fluteSynth, setSynth }: InstrumentProps): JSX.Element {
   // ]) as List<OscillatorType>;
 
   return (
-    <div className="ph4-ns bg-black white">
-      <div className="relative dib h2 w-100 ml7 mr0 justify-center-ns">
-        {Range(2, 7).map(octave =>
+    <div className="ph3-ns bg-moon-gray w-50 center-ns br4 h2 relative">
+        {Range(2, 3).map(octave =>
           keys.map(key => {
             const isMinor = key.note.indexOf('b') !== -1;
             const note = `${key.note}${octave}`;
@@ -176,12 +178,11 @@ function Flute({ fluteSynth, setSynth }: InstrumentProps): JSX.Element {
                 fluteSynth={fluteSynth}
                 minor={isMinor}
                 octave={octave}
-                index={(octave - 2) * 7 + key.idx}
+                index={(octave - 2) * 3 + key.idx}
               />
             );
           }),
         )}
-      </div>
       {/* <div className={'pl4 pt4 flex'}>
         {oscillators.map(o => (
           <FluteType
@@ -191,7 +192,7 @@ function Flute({ fluteSynth, setSynth }: InstrumentProps): JSX.Element {
             active={fluteSynth?.oscillator.type === o}
           /> */}
         {/* ))} */}
-      </div>
+        </div>
     // </div>
   );
 }

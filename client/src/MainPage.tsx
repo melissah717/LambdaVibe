@@ -94,14 +94,14 @@ export function MainPage({ state, dispatch }: PanelProps): JSX.Element {
 function ShowWelcomePanel(): JSX.Element {
   return (
     <div
-      className="absolute right-0 bottom-0 top-0 flex flex-column items-center justify-center"
+      className="absolute right-0 bottom-0 top-0 flex flex-column items-center justify-center white"
       style={{ left: '16rem' }}
     >
-      <div className="mw6 lh-copy mb4">
+      <div className="mw7 lh-copy mb4">
         <Music32 />
-        <div className="f3 fw7 mb2">Welcome to LambdaVibe: JM Residence edition</div>
+        <div className="f3 fw7 mb2">Welcome to LambdaVibe: JM Residence Edition</div>
         <div className="f4 mb3">
-          Select an instrument and a visualizer on the left to serve some fresh beats.
+          Select an instrument and a visualizer on the left to catJAM
         </div>
         <div className="f5"></div>
       </div>
@@ -121,8 +121,8 @@ function InstrumentAndVisualizerPanel({ state, dispatch }: PanelProps): JSX.Elem
 
   return (
     <div
-      className="absolute right-0 bottom-0 top-0 flex flex-column"
-      style={{ left: '16rem' }}
+      className="absolute right-0 bottom-0 top-0 flex flex-column bl-4-white"
+      style={{ left: '20rem' }}
     >
       <InstrumentPanel state={state} dispatch={dispatch} />
       <VisualizerPanel state={state} dispatch={dispatch} />

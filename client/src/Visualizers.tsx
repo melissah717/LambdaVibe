@@ -62,7 +62,7 @@ export function VisualizerContainer({ visualizer }: VisualizerContainerProps) {
 
   return (
     <div className={'bg-black absolute bottom-0 right-0 left-0'}>
-      <div className={'pl4 top-0 light-green f2 fw9-ns tracked-tight-ns pt4 pl3 justify-center-ns'}>{name}</div>
+      <div className={'ml5 top-0 light-green f2 fw9-ns tracked-tight-ns pt4 pl3 justify-center-ns'}>{name}</div>
       <Sketch
         setup={setup}
         draw={p5 => draw(p5, analyzer)}

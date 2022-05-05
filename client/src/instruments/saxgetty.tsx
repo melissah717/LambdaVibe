@@ -42,36 +42,48 @@ export function SaxophoneNotes({
    * See `SaxophoneNotesWithoutJSX` for the React component without JSX.
    */
   return (
-    // Observations:
-    // 1. The JSX refers to the HTML-looking syntax within TypeScript.
-    // 2. The JSX will be **transpiled** into the corresponding `React.createElement` library call.
-    // 3. The curly braces `{` and `}` should remind you of string interpolation.
-    <div
-      onMouseDown={() => saxSynth?.triggerAttackRelease(`${note}`, "3n")}  // Question: what is `onMouseDown`?
-      onMouseUp={() => saxSynth?.triggerRelease('+0.25')} // Question: what is `onMouseUp`?
-      className={classNames('ba pointer absolute dim', {
-        'bg-black black h3': minor, // minor keys are black
-        // 'black bg-white h4': !minor, // major keys are white
+    <div 
+    className="mt6 w-80 bg-gold center-ns relative">
+      <div 
+        className="fl-w-60 inline-flex absolute ml10-ns">
+      <div
+        onMouseDown={() => saxSynth?.triggerAttackRelease(`${note}`, "4n")}  // Question: what is `onMouseDown`?
+        className={classNames('dim pointer absolute', {
+          'bg-black br4 h2-ns pv3': !minor, // major keys
+          'bg-black br4 pr2 pv3': minor, // minor keys
       })}
       style={{
         // CSS
-        top: 0,
-        left: `${index * 2}rem`,
-        zIndex: minor ? 1 : 0,
-        // width: minor ? '1.5rem' : '2rem',
-        marginLeft: minor ? '0.25rem' : 0,
-        padding:10,
-        margin:20,
-        display:"inline-block",
-        // position:'absolute',
-        backgroundColor: "#393E41",
-        borderRadius: "50%",
-        width:100,
-        height:100,
+        left: `${index * 3}rem`,  
+        height: '2rem',
+        width: minor ? '1rem' : '2rem',
+        margin: minor ? '2rem' : '5rem',
+        overflow:'hidden',
       }}
     ></div>
+    </div>
+    </div>
   );
 }
+//       style={{
+//         // CSS
+//         top: 0,
+//         left: `${index * 2}rem`,
+//         zIndex: minor ? 1 : 0,
+//         // width: minor ? '1.5rem' : '2rem',
+//         marginLeft: minor ? '0.25rem' : 0,
+//         padding:10,
+//         margin:20,
+//         display:"inline-block",
+//         // position:'absolute',
+//         backgroundColor: "#393E41",
+//         borderRadius: "50%",
+//         width:100,
+//         height:100,
+//       }}
+//     ></div>
+//   );
+// }
 
 // eslint-disable-next-line
 function SaxophoneNotesWithoutJSX({
@@ -122,7 +134,7 @@ function SaxophoneType({ title, onClick, active }: any): JSX.Element {
 function Saxophone({ saxSynth, setSynth }: InstrumentProps): JSX.Element {
   const keys = List([
     { note: 'C', idx: 0 },
-     { note: 'Db', idx: 0.5 },
+    { note: 'Db', idx: 0.5 },
     { note: 'D', idx: 1 },
     { note: 'Eb', idx: 1.5 },
     { note: 'E', idx: 2 },
@@ -130,8 +142,7 @@ function Saxophone({ saxSynth, setSynth }: InstrumentProps): JSX.Element {
     { note: 'Gb', idx: 3.5 },
     { note: 'G', idx: 4 },
     { note: 'Ab', idx: 4.5 },
-    { note: 'A', idx: 4 },
-    { note: 'B', idx: 5 },
+    { note: 'A', idx: 5 },
     { note: 'Bb', idx: 5.5 },
     { note: 'B', idx: 6 },
   ]);
@@ -160,9 +171,8 @@ function Saxophone({ saxSynth, setSynth }: InstrumentProps): JSX.Element {
   // ]) as List<OscillatorType>;
 
   return (
-    <div className="pv4">
-      <div className="relative dib h4 w-100 ml4">
-        {Range(2, 7).map(octave =>
+    <div className="bg-gold w-60 center-ns br4 h4 relative rotate-45">
+        {Range(2, 3).map(octave =>
           keys.map(key => {
             const isMinor = key.note.indexOf('b') !== -1;
             const note = `${key.note}${octave}`;
@@ -173,24 +183,22 @@ function Saxophone({ saxSynth, setSynth }: InstrumentProps): JSX.Element {
                 saxSynth={saxSynth}
                 minor={isMinor}
                 octave={octave}
-                index={(octave - 2) * 7 + key.idx}
-                />
-                );
-              }),
-            )}
-          </div>
-          {/* <div className={'pl4 pt4 flex'}>
-            {oscillators.map(o => (
-              <FluteType
-                key={o}
-                title={o}
-                onClick={() => setOscillator(fluteSynth)}
-                active={fluteSynth?.oscillator.type === o}
-              /> */}
-            {/* ))} */}
-          </div>
-        // </div>
-      );
-    }
-
+                index={(octave - 2) * 3 + key.idx}
+              />
+            );
+          }),
+        )}
+      {/* <div className={'pl4 pt4 flex'}>
+        {oscillators.map(o => (
+          <FluteType
+            key={o}
+            title={o}
+            onClick={() => setOscillator(fluteSynth)}
+            active={fluteSynth?.oscillator.type === o}
+          /> */}
+        {/* ))} */}
+        </div>
+    // </div>
+  );
+}
 export const SaxophoneInstrument = new Instrument('Saxophone', Saxophone);

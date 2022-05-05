@@ -170,21 +170,23 @@ function SongsNav({ state, dispatch }: SideNavProps): JSX.Element {
         }}
       />
       {songs.filter((song) => {
-        if(searchTerm == ""){
+        if (searchTerm === "") {
           return song
-        } else if (song.get('songTitle').toLowerCase().includes(searchTerm.toLowerCase()) || song.get('author').toLowerCase().includes(searchTerm.toLowerCase())){
+        } else if (song.get('songTitle').toLowerCase().includes(searchTerm.toLowerCase()) || song.get('author').toLowerCase().includes(searchTerm.toLowerCase())) {
           return song
+        } else {
+          return null
         }
       }).map(song => (
-        <div 
+        <div
           key={song.get('id')}
           className="top-0 white fw2-ns tracked-tight-ns f5 pointer underline flex items-center no-underline dim"
           onClick={() =>
             dispatch(new DispatchAction('PLAY_SONG', { id: song.get('id') }))
-          }       
+          }
         >
           <Music20 className="mr1" />
-          {song.get('songTitle')}{" • "}{song.get('author')} 
+          {song.get('songTitle')}{" • "}{song.get('author')}
         </div>
       ))}
     </Section>

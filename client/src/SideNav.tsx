@@ -54,14 +54,14 @@ export function SideNav({ state, dispatch }: SideNavProps): JSX.Element {
   */
 
   return (
-    <div className="absolute top-0 left-0 bottom-0 w5.5 z-1 shadow-1 bg-black flex flex-column white">
+    <div className="absolute top-0 left-0 pr2 bottom-0 w5.5 z-1 shadow-1 bg-black flex flex-column">
       <div className="left-2 top-0 light-yellow f1 fw9-ns tracked-tight-ns pt4 pl3 ml2 mb0">
         LambdaVibe
       </div>
-      <div className="left-2 top-0 light-green f5 fw9-ns tracked-tight-ns pt1 pl3 self-end">
+      <div className="left-2 top-0 light-green f5 fw9-ns tracked-tight-ns pt1 pl3 self-end pb4">
          by JM Residence
       </div>
-      <div className="flex-auto fw1 f5-ns mt1 ml2">
+      <div className="flex-auto fw1 f5-ns mt2 ml">
         <InstrumentsNav state={state} dispatch={dispatch} />
         <VisualizersNav state={state} dispatch={dispatch} />
         <SongsNav state={state} dispatch={dispatch} />
@@ -235,8 +235,8 @@ function RadioButton({ to, text, active, onClick }: RadioButtonProps): JSX.Eleme
 
 const Section: React.FC<{ title: string }> = ({ title, children }) => {
   return (
-    <div className="flex flex-column h-25 bb bw1-ns b--light-gray pa3 bg-black white">
-      <div className="left-2 top-0 white f3 bt-m fw9-ns tracked-tight-ns pt4 pink pb1 pl1">{title} </div>
+    <div className="flex flex-column h-3 bb bw1-ns pa3 bg-black near-black pb4">
+      <div className="left-2 top-0 near-black f3 bt-m fw9-ns tracked-tight-ns pt4 pink pb1 pl1">{title} </div>
       <div className="flex-auto overflow-auto-ns pl1 pt-ns">{children}</div>
     </div>
   );

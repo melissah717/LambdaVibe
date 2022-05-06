@@ -5,7 +5,8 @@ import P5 from 'p5';
 
 import React, { useEffect, useMemo, useCallback } from 'react';
 
-type VisualizerDrawer = (p5: P5, analyzer: Tone.Analyser) => void;
+type VisualizerDrawer = (p5: P5, analyzer: Tone.Analyser, melbg: P5.Image) => void;
+
 
 interface VisualizerContainerProps {
   visualizer: Visualizer;
@@ -22,12 +23,13 @@ export class Visualizer {
 }
 
 export function VisualizerContainer({ visualizer }: VisualizerContainerProps) {
-  const { name, draw } = visualizer;
-
+  const { name, draw} = visualizer;
   const analyzer: Tone.Analyser = useMemo(
     () => new Tone.Analyser('waveform', 256),
     [],
   );
+
+  let melbg: P5.Image
 
   const onResize = useCallback((p5: P5) => {
     const width = window.innerWidth;
@@ -44,10 +46,20 @@ export function VisualizerContainer({ visualizer }: VisualizerContainerProps) {
     };
   }, [analyzer]);
 
+  const preload = (p5: P5) => {
+    melbg = p5.loadImage('melbg.jpeg');
+  }
+
   const setup = (p5: P5, canvasParentRef: Element) => {
     const width = window.innerWidth;
     const height = window.innerHeight / 2;
-    p5.angleMode('degrees')
+
+    // if (name === "melissah717"){
+      p5.angleMode('degrees')
+      p5.imageMode('center')
+      melbg.filter('blur', 10)
+    //   p5.createCanvas(width, height).parent(canvasParentRef);
+    // }
 
     // Adding an option for webgl for visualizers that require it.
     if (name === "saxgetty") {
@@ -64,10 +76,12 @@ export function VisualizerContainer({ visualizer }: VisualizerContainerProps) {
     <div className={'bg-black absolute bottom-0 right-0 left-0'}>
       <div className={'ml5 top-0 light-green f2 fw9-ns tracked-tight-ns pt4 pl3 justify-center-ns'}>{name}</div>
       <Sketch
+        preload={preload}
         setup={setup}
-        draw={p5 => draw(p5, analyzer)}
+        draw={p5 => draw(p5, analyzer, melbg)}
         windowResized={onResize}
       />
     </div>
   );
 }
+

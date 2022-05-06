@@ -66,7 +66,7 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
   const [fluteSynth] = useState(
     new Tone.Sampler({
       urls: {
-        C3: "https://cdn.kapwing.com/final_626b28264e259800a36dbf54_808371.mp3" //middle C note 
+        C3: "fluteC.mp3" //middle C note 
       },
       onload: () => {
         console.log("Flute sounds activated");

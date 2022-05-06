@@ -7,7 +7,7 @@ import { Visualizer } from '../Visualizers';
 
 export const FroggerSoftwareVisualizer = new Visualizer(
     'Frogger-Software',
-    (p5: P5, analyzer: Tone.Analyser) => {
+    (p5: P5, analyzer: Tone.Analyser, melbg: P5.Image) => {
         const width = window.innerWidth;
         const height = window.innerHeight / 2;
         const dim = Math.min(width, height);

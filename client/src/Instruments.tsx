@@ -93,7 +93,7 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
   const [saxSynth] = useState(
     new Tone.Sampler({
       urls: {
-        C3: "https://cdn.kapwing.com/final_6267741712065600d647a32c_197210.mp3" //middle C note
+        C3: "saxC.mp3" //middle C note
         // D3: "https://cdn.kapwing.com/final_626773fa5d9ef4009b32663d_477988.mp3",
         // E3: "https://cdn.kapwing.com/final_626773daa09021009a86b6b7_838830.mp3",
         // F3: "https://cdn.kapwing.com/final_626770312acf5f0077cc8299_69218.mp3",
@@ -107,9 +107,9 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
     new Tone.Sampler({
     urls: {
         // letter determines actual note 
-      E1: "https://cdn.kapwing.com/final_62682213960a8700766ca7de_141750.mp3", // first
+      E1: "vaporE1.mp3", // first
       // F2: "https://cdn.kapwing.com/final_626822a54a94a30114cae76e_537685.mp3", // second
-      C3: "https://cdn.kapwing.com/final_62682611547067008ddbca49_355155.mp3" //third
+      C3: "vaporC3.mp3" //third
       // D4: "https://cdn.kapwing.com/final_6268298dd540f9006733fd80_779826.mp3", // fourth
 
       // A4: "https://cdn.kapwing.com/final_62682213960a8700766ca7de_141750.mp3", // first repeat

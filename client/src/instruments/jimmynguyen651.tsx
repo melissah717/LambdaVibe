@@ -65,13 +65,13 @@ export function VaporwaveNotes({
           //CSS
           top: 0,
           width: '35px',
-          marginLeft: '225px',
-          height: '25px',
+          marginLeft: '20px',
+          height: '45px',
           borderRadius: '10px',
           borderColor: '#00CAB1 ',
           borderWidth: '3px',
-          backgroundColor: '#000000', 
-          marginRight: '25px',
+          backgroundColor: '#aaf3ea', 
+          marginRight: 'px',
           marginTop: '-10px', // if the margin for top exceeds 0, clickability breaks. no clue why and i hate it 
         }}
       ></div>

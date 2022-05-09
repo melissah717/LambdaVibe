@@ -194,7 +194,7 @@ export const jimmynguyen651Visualizer = new Visualizer(
 
         
         // SNOW
-        for (var i = 0; i < 40; i++ ) { // loop randomly places elipses everywhere to simulate snow
+        for (var i = 0; i < 10; i++ ) { // loop randomly places elipses everywhere to simulate snow
           p5.fill(255,255, 255, 255)
           var locationX = p5.random(p5.width)
           var locationY = p5.random(p5.height)

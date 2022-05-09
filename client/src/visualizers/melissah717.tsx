@@ -12,38 +12,11 @@ export const melissah717Visualizer = new Visualizer(
     //draw begins
     (p5: P5, analyzer: Tone.Analyser, imgLoader: P5.Image) => {
 
-        class Particle {
-            position: P5.Vector;
-            velocity: P5.Vector;
-            acceleration: P5.Vector;
-            w: number;
-            color: number[];
-            constructor() {
-                this.position = P5.Vector.random2D().mult(200)
-                this.velocity = p5.createVector(0, 0)
-                this.acceleration = this.position.copy().mult(p5.random(0.00001, 0.00001))
-                this.w = p5.random(3, 5)
-
-                this.color = [p5.random(0, 255), p5.random(0, 255), p5.random(0, 255)]
-            }
-
-            update() {
-                this.velocity.add(this.acceleration)
-                this.position.add(this.velocity)
-            }
-
-            show() {
-                p5.noStroke()
-                p5.fill(255)
-                p5.ellipse(this.position.x, this.position.y, this.w)
-            }
-        }
 
         // let color = p5.color(10, 0, 255)
         const width = window.innerWidth;
         const height = window.innerHeight / 2;
         const dim = Math.min(width, height);
-        let particles = []
 
         p5.background(0)
         p5.strokeWeight(dim * 0.01);
@@ -75,15 +48,6 @@ export const melissah717Visualizer = new Visualizer(
                 }
                 p5.endShape();
             }
-
-    
-        let p = new Particle()
-        particles.push(p)
-
-        for (let i = 0; i < particles.length; i++) {
-            particles[i].show()
-            particles[i].update()
-        }
     },
 );
 

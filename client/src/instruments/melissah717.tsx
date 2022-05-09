@@ -2,7 +2,7 @@
 import * as Tone from 'tone';
 import classNames from 'classnames';
 import { List, Range } from 'immutable';
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 
 // project imports
 import { Instrument, InstrumentProps } from '../Instruments';
@@ -106,19 +106,19 @@ function FluteNotesWithoutJSX({
   );
 }
 
-function FluteType({ title, onClick, active }: any): JSX.Element {
-  return (
-    <div
-      onClick={onClick}
-      className={classNames('dim pointer ph2 pv1 ba mr2 br1 fw7 bw1', {
-        'b--black black': active,
-        'gray b--light-gray': !active,
-      })}
-    >
-      {title}
-    </div>
-  );
-}
+// function FluteType({ title, onClick, active }: any): JSX.Element {
+//   return (
+//     <div
+//       onClick={onClick}
+//       className={classNames('dim pointer ph2 pv1 ba mr2 br1 fw7 bw1', {
+//         'b--black black': active,
+//         'gray b--light-gray': !active,
+//       })}
+//     >
+//       {title}
+//     </div>
+//   );
+// }
 
 function Flute({ fluteSynth, setSynth }: InstrumentProps): JSX.Element {
   const keys = List([
@@ -197,4 +197,4 @@ function Flute({ fluteSynth, setSynth }: InstrumentProps): JSX.Element {
   );
 }
 
-export const FluteInstrument = new Instrument('Flute', Flute);
+export const FluteInstrument = new Instrument('Flute - melissah717', Flute);

@@ -80,21 +80,21 @@ export function VaporwaveNotes({
 }
 
 
-function VaporwaveType({ title, onClick, active }: any): JSX.Element {
-  return (
-    <div
-      onClick={onClick}
-      className={classNames('dim pointer ph2 pv1 ba mr2 br1 fw7 bw1', {
-        // first color means it's selected
-        'green': active,
-        // second color is default appearance
-        'green dark': !active,
-      })}
-    >
-      {title}
-    </div>
-  );
-}
+// function VaporwaveType({ title, onClick, active }: any): JSX.Element {
+//   return (
+//     <div
+//       onClick={onClick}
+//       className={classNames('dim pointer ph2 pv1 ba mr2 br1 fw7 bw1', {
+//         // first color means it's selected
+//         'green': active,
+//         // second color is default appearance
+//         'green dark': !active,
+//       })}
+//     >
+//       {title}
+//     </div>
+//   );
+// }
 
 function Vaporwave({ vaporSynth, setSynth }: InstrumentProps): JSX.Element {
   const keys = List([
@@ -160,4 +160,4 @@ function Vaporwave({ vaporSynth, setSynth }: InstrumentProps): JSX.Element {
     // </div>
   );
 }
-export const VaporwaveInstrument = new Instrument('Vaporwave', Vaporwave);
+export const VaporwaveInstrument = new Instrument('Vaporwave - jimmynguyen651', Vaporwave);

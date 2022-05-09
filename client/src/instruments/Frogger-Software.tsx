@@ -87,19 +87,19 @@ function DrumNotesWithoutJSX({
 }
 
 //for sine, triangle etc
-function DrumType({ title, onClick, active }: any): JSX.Element {
-  return (
-    <div
-      onClick={onClick}
-      className={classNames('dim pointer ph2 pv1 ba mr2 br1 fw7 bw1', {
-        'b--black black': active,
-        'gray b--light-gray': !active,
-      })}
-    >
-      {title}
-    </div>
-  );
-}
+// function DrumType({ title, onClick, active }: any): JSX.Element {
+//   return (
+//     <div
+//       onClick={onClick}
+//       className={classNames('dim pointer ph2 pv1 ba mr2 br1 fw7 bw1', {
+//         'b--black black': active,
+//         'gray b--light-gray': !active,
+//       })}
+//     >
+//       {title}
+//     </div>
+//   );
+// }
 
 function Drum({ drumSynth, setSynth }: InstrumentProps): JSX.Element {
   const keys = List([
@@ -174,4 +174,4 @@ function Drum({ drumSynth, setSynth }: InstrumentProps): JSX.Element {
   );
 }
 
-export const DrumInstrument = new Instrument('Drum', Drum);
+export const DrumInstrument = new Instrument('Drum - Frogger-Software', Drum);

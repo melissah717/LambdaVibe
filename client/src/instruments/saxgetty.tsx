@@ -117,19 +117,19 @@ function SaxophoneNotesWithoutJSX({
   );
 }
 
-function SaxophoneType({ title, onClick, active }: any): JSX.Element {
-  return (
-    <div
-      onClick={onClick}
-      className={classNames('dim pointer ph2 pv1 ba mr2 br1 fw7 bw1', {
-        'b--black black': active,
-        'gray b--light-gray': !active,
-      })}
-    >
-      {title}
-    </div>
-  );
-}
+// function SaxophoneType({ title, onClick, active }: any): JSX.Element {
+//   return (
+//     <div
+//       onClick={onClick}
+//       className={classNames('dim pointer ph2 pv1 ba mr2 br1 fw7 bw1', {
+//         'b--black black': active,
+//         'gray b--light-gray': !active,
+//       })}
+//     >
+//       {title}
+//     </div>
+//   );
+// }
 
 function Saxophone({ saxSynth, setSynth }: InstrumentProps): JSX.Element {
   const keys = List([
@@ -201,4 +201,4 @@ function Saxophone({ saxSynth, setSynth }: InstrumentProps): JSX.Element {
     // </div>
   );
 }
-export const SaxophoneInstrument = new Instrument('Saxophone', Saxophone);
+export const SaxophoneInstrument = new Instrument('Saxophone - saxgetty', Saxophone);

@@ -67,7 +67,7 @@ export function VisualizerContainer({ visualizer }: VisualizerContainerProps) {
 
       p5.angleMode('degrees')
       p5.imageMode('center')
-      imgLoader.filter('blur', 10)
+      imgLoader.filter('blur', 2)
     }
     
     // Adding an option for webgl for visualizers that require it.

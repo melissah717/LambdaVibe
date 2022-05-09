@@ -37,16 +37,6 @@ export const melissah717Visualizer = new Visualizer(
                 p5.fill(255)
                 p5.ellipse(this.position.x, this.position.y, this.w)
             }
-
-
-            edges() {
-                if (this.position.x < -width / 2 || this.position.x > width / 2 ||
-                    this.position.y < -height / 2 || this.position.y > height / 2) {
-                    return true
-                } else {
-                    return false
-                }
-            }
         }
 
         // let color = p5.color(10, 0, 255)
@@ -91,8 +81,8 @@ export const melissah717Visualizer = new Visualizer(
         particles.push(p)
 
         for (let i = 0; i < particles.length; i++) {
-            particles[i].update()
             particles[i].show()
+            particles[i].update()
         }
     },
 );

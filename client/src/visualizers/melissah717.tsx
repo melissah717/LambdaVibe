@@ -10,7 +10,7 @@ import { Visualizer } from '../Visualizers';
 export const melissah717Visualizer = new Visualizer(
     'melissah717',
     //draw begins
-    (p5: P5, analyzer: Tone.Analyser, melbg: P5.Image) => {
+    (p5: P5, analyzer: Tone.Analyser, imgLoader: P5.Image) => {
 
         class Particle {
             position: P5.Vector;
@@ -61,7 +61,7 @@ export const melissah717Visualizer = new Visualizer(
         p5.noFill();
 
         p5.translate(width / 2, height / 2);
-        p5.image(melbg, 0, 0, width, height)
+        p5.image(imgLoader, 0, 0, width, height)
 
         const values = analyzer.getValue();
 

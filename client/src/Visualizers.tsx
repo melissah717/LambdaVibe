@@ -5,7 +5,7 @@ import P5 from 'p5';
 
 import React, { useEffect, useMemo, useCallback } from 'react';
 
-type VisualizerDrawer = (p5: P5, analyzer: Tone.Analyser, melbg: P5.Image) => void;
+type VisualizerDrawer = (p5: P5, analyzer: Tone.Analyser, imgLoader: P5.Image) => void;
 
 
 interface VisualizerContainerProps {
@@ -29,7 +29,7 @@ export function VisualizerContainer({ visualizer }: VisualizerContainerProps) {
     [],
   );
 
-  let melbg: P5.Image
+  let imgLoader: P5.Image
 
   const onResize = useCallback((p5: P5) => {
     const width = window.innerWidth;
@@ -46,21 +46,30 @@ export function VisualizerContainer({ visualizer }: VisualizerContainerProps) {
     };
   }, [analyzer]);
 
+  // Preloads our images to render depending on which visualizer.
   const preload = (p5: P5) => {
-    melbg = p5.loadImage('melbg.jpeg');
+
+    if (name === "melissah717") {
+
+      imgLoader = p5.loadImage('melbg.jpeg');
+    }
+    else if (name === "saxgetty") {
+
+      imgLoader = p5.loadImage('pepeSax.png');
+    }
   }
 
   const setup = (p5: P5, canvasParentRef: Element) => {
     const width = window.innerWidth;
     const height = window.innerHeight / 2;
 
-    // if (name === "melissah717"){
+    if (name === "melissah717") {
+
       p5.angleMode('degrees')
       p5.imageMode('center')
-      melbg.filter('blur', 10)
-    //   p5.createCanvas(width, height).parent(canvasParentRef);
-    // }
-
+      imgLoader.filter('blur', 10)
+    }
+    
     // Adding an option for webgl for visualizers that require it.
     if (name === "saxgetty") {
 
@@ -78,7 +87,7 @@ export function VisualizerContainer({ visualizer }: VisualizerContainerProps) {
       <Sketch
         preload={preload}
         setup={setup}
-        draw={p5 => draw(p5, analyzer, melbg)}
+        draw={p5 => draw(p5, analyzer, imgLoader)}
         windowResized={onResize}
       />
     </div>

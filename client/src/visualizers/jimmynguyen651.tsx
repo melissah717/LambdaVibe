@@ -7,7 +7,7 @@ import { Visualizer } from '../Visualizers';
 
 export const jimmynguyen651Visualizer = new Visualizer(
     'jimmynguyen651',
-    (p5: P5, analyzer: Tone.Analyser, melbg: P5.Image) => {
+    (p5: P5, analyzer: Tone.Analyser) => {
       const width = window.innerWidth;
       const height = window.innerHeight / 2;
       const dim = Math.min(width, height);
